@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
 import prisma from "../prisma/prisma";
+import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import * as bcrypt from "bcryptjs";
+
+dotenv.config();
 
 interface authController {
   getToken(req: Request, res: Response): Promise<void>;
@@ -53,9 +56,9 @@ const authController: authController = {
       // ** This is our JWT Token
       const token = jwt.sign(
         { id: isUserExist?.id, email: isUserExist?.email },
-        "YOUR_SECRET",
+        process.env.SECRET_KEY || "catsanddogs",
         {
-          expiresIn: "1d",
+          expiresIn: "7d",
         },
       );
 
@@ -63,7 +66,7 @@ const authController: authController = {
       res.status(200).json({
         status: 200,
         success: true,
-        message: "login success",
+        message: "login successful",
         token: token,
       });
     } catch (error: any) {
