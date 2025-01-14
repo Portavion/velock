@@ -5,11 +5,16 @@ import "./index.css";
 import App from "./App.tsx";
 
 import SignupForm from "./components/SignupForm/SignupForm.tsx";
+import LoginForm from "./components/LoginForm/LoginForm.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "login",
+    element: <LoginForm />,
   },
   {
     path: "signup",

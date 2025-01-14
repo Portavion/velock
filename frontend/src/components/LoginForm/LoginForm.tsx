@@ -1,32 +1,30 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./SignupForm.module.css";
+import styles from "./LoginForm.module.css";
 
-function SignupForm() {
-  const [username, setUsername] = useState("");
+function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   let navigate = useNavigate();
 
-  function submitNewUser(event: any): void {
+  function submitLogin(event: any): void {
     event.preventDefault();
 
-    fetch("http://localhost:3000/api/v1/users", {
+    fetch("http://localhost:3000/api/v1/auth/login", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ username, email, password, passwordConfirmation }),
+      body: JSON.stringify({ email, password }),
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.message === "success") {
-          setUsername("");
+        if (data.success === true) {
+          localStorage.setItem("jwt-token", data.token);
+          console.log(data.token);
           setEmail("");
           setPassword("");
-          setPasswordConfirmation("");
           navigate("/");
         } else {
           alert(data.message);
@@ -36,19 +34,7 @@ function SignupForm() {
 
   return (
     <>
-      <form onSubmit={submitNewUser}>
-        <div className={styles.formSection}>
-          <label htmlFor="username">Username:</label>
-          <br />
-          <input
-            type="text"
-            name="username"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
+      <form onSubmit={submitLogin}>
         <div className={styles.formSection}>
           <label htmlFor="email">Email:</label>
           <br />
@@ -73,22 +59,10 @@ function SignupForm() {
             required
           />
         </div>
-        <div className={styles.formSection}>
-          <label htmlFor="confirm-password">Confirm Password:</label>
-          <br />
-          <input
-            type="password"
-            name="confirm-password"
-            id="confirm-password"
-            value={passwordConfirmation}
-            onChange={(e) => setPasswordConfirmation(e.target.value)}
-            required
-          />
-        </div>
         <button type="submit">Submit</button>
       </form>
     </>
   );
 }
 
-export default SignupForm;
+export default LoginForm;

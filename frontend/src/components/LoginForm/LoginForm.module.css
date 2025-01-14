@@ -1,0 +1,15 @@
+.formSection {
+  padding: 0.5em 0.5em;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  text-align: center;
+}
+
+label {
+  font-size: 0.8em;
+}
