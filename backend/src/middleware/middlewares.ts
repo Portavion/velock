@@ -16,24 +16,26 @@ async function verifyJWT(req: Request, res: Response, next: NextFunction) {
       return res.status(400).json({ error: "No token provided" });
     }
 
-    return jwt.verify(token, SECRET_KEY, async (err: any, decoded: any) => {
-      if (err) {
-        return res.status(400).json({ error: err });
-      }
+    return jwt.verify(
+      token,
+      SECRET_KEY,
+      async (err: any, decoded: any): Promise<void> => {
+        if (err) {
+          res.status(400).json({ error: err });
+        }
 
-      req.body.id = decoded.id;
+        req.body.id = decoded.id;
 
-      const user = await prisma.user.findUnique({
-        where: { id: req.body.id },
-      });
+        const user = await prisma.user.findUnique({
+          where: { id: req.body.id },
+        });
 
-      if (!user) {
-        return res.status(400).json({ error: "User not exists" });
-      }
-
-      next();
-      return;
-    });
+        if (!user) {
+          res.status(400).json({ error: "User not exists" });
+        }
+        next();
+      },
+    );
   }
   return res.status(400).json({ error: "No headers provided" });
 }

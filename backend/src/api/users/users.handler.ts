@@ -1,3 +1,4 @@
+//TODO: refactor: extract business logic into services / workers
 import { NextFunction, Request, Response } from "express";
 import prisma from "../../prisma/prisma";
 import * as bcrypt from "bcryptjs";
@@ -12,7 +13,6 @@ const usersHandler: UsersHandler = {
     const users = await prisma.user.findMany();
     console.log(`Received request from ${req.ip}`);
     res.status(200).json({ users });
-    return;
   },
 
   createUser: async (
@@ -51,8 +51,6 @@ const usersHandler: UsersHandler = {
         }
       }
     });
-
-    return;
   },
 };
 

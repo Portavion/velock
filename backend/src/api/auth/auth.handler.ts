@@ -1,5 +1,7 @@
+//TODO: refactor: extract business logic into services / workers
 import { Request, Response } from "express";
 import prisma from "../../prisma/prisma";
+import { User } from "@prisma/client";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import * as bcrypt from "bcryptjs";
@@ -15,8 +17,9 @@ const authHandler: AuthHandler = {
     try {
       const user = req.body;
       const { email, password } = user;
+      let isPasswordMatched;
 
-      const isUserExist = await prisma.user.findUnique({
+      const isUserExist: User | null = await prisma.user.findUnique({
         where: { email: email },
       });
 
@@ -26,13 +29,12 @@ const authHandler: AuthHandler = {
           success: false,
           message: "User not found",
         });
-        return;
+      } else {
+        isPasswordMatched = await bcrypt.compare(
+          password,
+          isUserExist.password,
+        );
       }
-
-      const isPasswordMatched = await bcrypt.compare(
-        password,
-        isUserExist.password,
-      );
 
       if (!isPasswordMatched) {
         res.status(400).json({
@@ -40,7 +42,6 @@ const authHandler: AuthHandler = {
           success: false,
           message: "wrong password",
         });
-        return;
       }
 
       // ** if the email and password is valid create a token
