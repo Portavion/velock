@@ -1,7 +1,6 @@
 //TODO: refactor config in another  file?
 import express, { Application } from "express";
 import dotenv from "dotenv";
-import bodyParser from "body-parser";
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 import passport from "passport";
 import prisma from "./prisma/prisma";
@@ -37,8 +36,8 @@ passport.use(
 const app: Application = express();
 const port = process.env.PORT || 3000;
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.use(function (req, res, next) {
   console.log(`Setting up cors ${req.ip}`);
