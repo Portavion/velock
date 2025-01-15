@@ -5,7 +5,7 @@ import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 import passport from "passport";
 import prisma from "./prisma/prisma";
 
-import apiV1Router from "./routes/apiV1Router";
+import apiV1Router from "./routes";
 
 dotenv.config();
 

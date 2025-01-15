@@ -1,14 +1,13 @@
-// controllers/userController.ts
 import { NextFunction, Request, Response } from "express";
-import prisma from "../prisma/prisma";
+import prisma from "../../prisma/prisma";
 import * as bcrypt from "bcryptjs";
 
-interface UserController {
+interface UsersHandler {
   getUsers(req: Request, res: Response): Promise<void>;
   createUser(req: Request, res: Response, next: NextFunction): Promise<void>;
 }
 
-const userController: UserController = {
+const usersHandler: UsersHandler = {
   getUsers: async (req: Request, res: Response): Promise<void> => {
     const users = await prisma.user.findMany();
     console.log(`Received request from ${req.ip}`);
@@ -57,4 +56,4 @@ const userController: UserController = {
   },
 };
 
-export default userController;
+export default usersHandler;

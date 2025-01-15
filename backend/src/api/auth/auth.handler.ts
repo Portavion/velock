@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
-import prisma from "../prisma/prisma";
+import prisma from "../../prisma/prisma";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import * as bcrypt from "bcryptjs";
 
 dotenv.config();
 
-interface authController {
+interface AuthHandler {
   getToken(req: Request, res: Response): Promise<void>;
 }
 
-const authController: authController = {
+const authHandler: AuthHandler = {
   getToken: async (req: Request, res: Response): Promise<void> => {
     try {
       const user = req.body;
@@ -77,4 +77,4 @@ const authController: authController = {
   },
 };
 
-export default authController;
+export default authHandler;
