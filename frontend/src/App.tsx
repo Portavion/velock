@@ -1,4 +1,3 @@
-// import velockLogo from "/velock-logo.png";
 import velockLogo from "../public/velock-logo.png";
 import "./App.css";
 

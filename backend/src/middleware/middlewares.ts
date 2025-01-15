@@ -1,11 +1,12 @@
 import { Request, Response, NextFunction } from "express";
+import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import prisma from "../prisma/prisma";
 import { User } from "@prisma/client";
 import passport from "passport";
 
-// import { SECRET_KEY } from '~/infra/constants/env';
-const SECRET_KEY = "YOUR_SECRET";
+dotenv.config();
+const SECRET_KEY: jwt.Secret = process.env.SECRET_KEY || "YOUR_SECRET";
 
 // Custom JWT authentication middleware
 async function verifyJWT(req: Request, res: Response, next: NextFunction) {
