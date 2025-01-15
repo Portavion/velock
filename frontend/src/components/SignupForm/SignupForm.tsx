@@ -8,9 +8,9 @@ function SignupForm() {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
-  function submitNewUser(event: any): void {
+  function submitNewUser(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
     fetch("http://localhost:3000/api/v1/users", {

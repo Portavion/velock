@@ -50,8 +50,6 @@ const authController: authController = {
     2. Secret Key - A secure key known only to the server used for signing the token.
     3. expiration -  Additional settings like token expiration or algorithm selection.
     */
-      //TODO: SECRET from dotenv
-      // !! Don't Provide the secret openly, keep it in the .env file. I am Keeping Open just for demonstration
 
       // ** This is our JWT Token
       const token = jwt.sign(
