@@ -21,7 +21,7 @@ model User {
 }
 
 model BikePoint {
-  id           Int     @id @default(autoincrement())
+  id           String     @id
   commonName   String
   locked       Boolean @default(false)
   bikes        Int

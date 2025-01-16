@@ -8,6 +8,7 @@ import helmet from "helmet";
 import { errorHandler } from "./middleware/middlewares";
 
 import apiV1Router from "./routes";
+import { updateBikePointsTable } from "./prisma/populateBikepoints";
 
 dotenv.config();
 
@@ -52,6 +53,8 @@ app.use(function (req, res, next) {
   );
   next();
 });
+
+setInterval(updateBikePointsTable, 1000 * 60); // updates every minute 1000ms * 60s
 
 app.use("/api/v1/", apiV1Router);
 app.use(errorHandler);

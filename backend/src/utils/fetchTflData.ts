@@ -1,6 +1,6 @@
 import fetch, { Response as FetchResponse } from "node-fetch";
 
-async function fetchTflData(): Promise<JSON | unknown> {
+async function fetchTflData(): Promise<unknown> {
   try {
     const bikePointsFetchURL = "https://api.tfl.gov.uk/BikePoint";
 
