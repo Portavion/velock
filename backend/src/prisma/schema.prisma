@@ -19,3 +19,16 @@ model User {
   password String
   username String @unique
 }
+
+model BikePoint {
+  id           Int     @id @default(autoincrement())
+  commonName   String
+  locked       Boolean @default(false)
+  bikes        Int
+  emptyDocks   Int
+  docks        Int
+  standardBike Int
+  ebikes       Int
+  lat          Int
+  lon          Int
+}
