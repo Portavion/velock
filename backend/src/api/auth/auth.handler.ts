@@ -1,5 +1,5 @@
 //TODO: refactor: extract business logic into services / workers
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import prisma from "../../prisma/prisma";
 import { User } from "@prisma/client";
 import dotenv from "dotenv";
@@ -9,11 +9,15 @@ import * as bcrypt from "bcryptjs";
 dotenv.config();
 
 interface AuthHandler {
-  getToken(req: Request, res: Response): Promise<void>;
+  getToken(req: Request, res: Response, next: NextFunction): Promise<void>;
 }
 
 const authHandler: AuthHandler = {
-  getToken: async (req: Request, res: Response): Promise<void> => {
+  getToken: async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     try {
       const user = req.body;
       const { email, password } = user;
@@ -74,6 +78,7 @@ const authHandler: AuthHandler = {
         status: 400,
         message: error.message.toString(),
       });
+      next(error);
     }
   },
 };

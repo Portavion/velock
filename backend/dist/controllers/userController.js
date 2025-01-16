@@ -95,11 +95,10 @@ const userController = {
             newUser: newUser,
           });
         } catch (errors) {
-          return next(errors);
+          next(errors);
         }
       }
     });
-    return;
   },
 };
 exports.default = userController;

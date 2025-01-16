@@ -9,7 +9,7 @@ async function fetchTflData(): Promise<JSON | unknown> {
     const bikeStationJson = bikeStationResponse.json();
     return bikeStationJson;
   } catch (error: unknown) {
-    return error;
+    throw new Error(`Issue fetching bike station information: ${error}`);
   }
 }
 

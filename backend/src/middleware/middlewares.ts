@@ -54,4 +54,14 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
   })(req, res, next);
 };
 
-export { verifyJWT, authenticate };
+const errorHandler = (
+  err: Error,
+  _req: Request,
+  res: Response,
+  _next: NextFunction,
+) => {
+  console.error(err);
+  res.status(500).send({ errors: [{ message: "Something went wrong" }] });
+};
+
+export { verifyJWT, authenticate, errorHandler };

@@ -4,15 +4,22 @@ import prisma from "../../prisma/prisma";
 import * as bcrypt from "bcryptjs";
 
 interface UsersHandler {
-  getUsers(req: Request, res: Response): Promise<void>;
+  getUsers(req: Request, res: Response, next: NextFunction): Promise<void>;
   createUser(req: Request, res: Response, next: NextFunction): Promise<void>;
 }
 
 const usersHandler: UsersHandler = {
-  getUsers: async (req: Request, res: Response): Promise<void> => {
-    const users = await prisma.user.findMany();
-    console.log(`Received request from ${req.ip}`);
-    res.status(200).json({ users });
+  getUsers: async (
+    _req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const users = await prisma.user.findMany();
+      res.status(200).json({ users });
+    } catch (error) {
+      next(error);
+    }
   },
 
   createUser: async (
@@ -47,7 +54,7 @@ const usersHandler: UsersHandler = {
             newUser: newUser,
           });
         } catch (errors) {
-          return next(errors);
+          next(errors);
         }
       }
     });

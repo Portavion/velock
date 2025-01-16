@@ -5,6 +5,7 @@ import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 import passport from "passport";
 import prisma from "./prisma/prisma";
 import helmet from "helmet";
+import { errorHandler } from "./middleware/middlewares";
 
 import apiV1Router from "./routes";
 
@@ -53,6 +54,7 @@ app.use(function (req, res, next) {
 });
 
 app.use("/api/v1/", apiV1Router);
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Server is live at http://localhost:${port}`);
