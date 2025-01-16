@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 import passport from "passport";
 import prisma from "./prisma/prisma";
+import helmet from "helmet";
 
 import apiV1Router from "./routes";
 
@@ -36,6 +37,7 @@ passport.use(
 const app: Application = express();
 const port = process.env.PORT || 3000;
 
+app.use(helmet());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
