@@ -24,11 +24,11 @@ model BikePoint {
   id           String     @id
   commonName   String
   locked       Boolean @default(false)
-  bikes        Int
-  emptyDocks   Int
-  docks        Int
-  standardBike Int
-  ebikes       Int
-  lat          Int
-  lon          Int
+  bikes        String
+  emptyDocks   String
+  docks        String
+  standardBike String
+  ebikes       String
+  lat          Float
+  lon          Float
 }

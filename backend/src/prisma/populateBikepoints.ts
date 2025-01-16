@@ -10,13 +10,13 @@ async function formatBikePointData(): Promise<any> {
       id: bikePoint.id,
       commonName: bikePoint.commonName,
       locked: bikePoint.additionalProperties[2].value === "true" ? true : false,
-      bikes: Number(bikePoint.additionalProperties[6].value),
-      emptyDocks: Number(bikePoint.additionalProperties[7].value),
-      docks: Number(bikePoint.additionalProperties[8].value),
-      standardBike: Number(bikePoint.additionalProperties[9].value),
-      ebikes: Number(bikePoint.additionalProperties[10].value),
-      lat: Number(bikePoint.lat),
-      lon: Number(bikePoint.lon),
+      bikes: bikePoint.additionalProperties[6].value,
+      emptyDocks: bikePoint.additionalProperties[7].value,
+      docks: bikePoint.additionalProperties[8].value,
+      standardBike: bikePoint.additionalProperties[9].value,
+      ebikes: bikePoint.additionalProperties[10].value,
+      lat: bikePoint.lat,
+      lon: bikePoint.lon,
     }));
   } catch (error) {
     throw new Error("Error getting bike point data");
@@ -52,15 +52,13 @@ async function updateBikePointsTable(): Promise<void> {
             id: bikePoint.id,
             commonName: bikePoint.commonName,
             locked: bikePoint.locked,
-            bikes: Number(bikePoint.bikes),
-            // emptyDocks: Number(bikePoint.emptyDocks),
-            emptyDocks:
-              bikePoint.docks - (bikePoint.standardBike + bikePoint.ebikes),
-            docks: Number(bikePoint.docks),
-            standardBike: Number(bikePoint.standardBike),
-            ebikes: Number(bikePoint.ebikes),
-            lat: Number(bikePoint.lat),
-            lon: Number(bikePoint.lon),
+            bikes: bikePoint.bikes,
+            emptyDocks: bikePoint.emptyDocks,
+            docks: bikePoint.docks,
+            standardBike: bikePoint.standardBike,
+            ebikes: bikePoint.ebikes,
+            lat: bikePoint.lat,
+            lon: bikePoint.lon,
           },
         });
       } catch (error) {
