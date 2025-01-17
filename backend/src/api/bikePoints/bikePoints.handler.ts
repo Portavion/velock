@@ -37,8 +37,12 @@ const bikePointsHandler: BikePointsHandler = {
     res: Response,
     next: NextFunction,
   ): Promise<void> => {
-    const street = req.query.street;
-    const fetchCoordUrl = `https://nominatim.openstreetmap.org/?street=${street}&country=uk&city=london&format=json`;
+    const address =
+      String(req.query.address).length <= 7
+        ? req.query.address
+        : req.query.address + "+london";
+
+    const fetchCoordUrl = `https://nominatim.openstreetmap.org/search.php?q=${address}&countrycodes=gb&format=json`;
     let latitude: number;
     let longitude: number;
     const limit: number = 10;
