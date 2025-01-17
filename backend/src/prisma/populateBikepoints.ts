@@ -9,7 +9,7 @@ async function formatBikePointData(): Promise<any> {
     return bikePointsData.map((bikePoint: any) => ({
       id: bikePoint.id,
       commonName: bikePoint.commonName,
-      locked: bikePoint.additionalProperties[2].value === "true" ? true : false,
+      locked: bikePoint.additionalProperties[2].value ? true : false,
       bikes: bikePoint.additionalProperties[6].value,
       emptyDocks: bikePoint.additionalProperties[7].value,
       docks: bikePoint.additionalProperties[8].value,
@@ -35,7 +35,7 @@ async function populateBikePointsTable(): Promise<void> {
 
 async function updateBikePointsTable(): Promise<void> {
   const data = await formatBikePointData();
-  const isPopulated = (await prisma.bikePoint.count()) > 0 ? true : false;
+  const isPopulated = (await prisma.bikePoint.count()) ? true : false;
 
   if (!isPopulated) {
     try {
