@@ -1,5 +1,4 @@
 //TODO: refactor: extract business logic into services / workers
-//TODO: extract tfl logic out of api / replace with own db query
 import { NextFunction, Request, Response } from "express";
 import fetch, { Response as FetchResponse } from "node-fetch";
 import fetchTflData from "../../utils/fetchTflData";

@@ -9,7 +9,7 @@ async function formatBikePointData(): Promise<any> {
     return bikePointsData.map((bikePoint: any) => ({
       id: bikePoint.id,
       commonName: bikePoint.commonName,
-      locked: bikePoint.additionalProperties[2].value ? true : false,
+      locked: bikePoint.additionalProperties[2].value,
       bikes: bikePoint.additionalProperties[6].value,
       emptyDocks: bikePoint.additionalProperties[7].value,
       docks: bikePoint.additionalProperties[8].value,
