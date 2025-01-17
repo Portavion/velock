@@ -97,10 +97,8 @@ const bikePointsListsHandler: BikePointsListsHandler = {
     const listName: string = req.body.listName;
     const user: User = req.user as User;
     const listId: number = parseInt(req.body.listId);
-    const bikePointsLists: Array<string> = req.body.bikePointsLists || [];
+    const bikePointsList: Array<string> = req.body.bikePointsList;
 
-    console.log("list");
-    console.log(bikePointsLists);
     if (!listName || !user) {
       res.status(401).json({
         message: "Error: List creation requires a name and a user id ",
@@ -120,7 +118,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
         const updatedBikePointList = await updateBikePointsList(
           listId,
           listName,
-          bikePointsLists.length >= 1 ? bikePointsLists : [],
+          bikePointsList.length >= 1 ? bikePointsList : [],
         );
         res.status(200).json({ updatedBikePointList });
       } catch (error) {
