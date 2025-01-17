@@ -97,7 +97,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
     const listName: string = req.body.listName;
     const user: User = req.user as User;
     const listId: number = parseInt(req.body.listId);
-    const bikePointsList: Array<string> = req.body.bikePointsList;
+    const bikePointsList: Array<string> = req.body.bikePointsList || [];
 
     if (!listName || !user) {
       res.status(401).json({

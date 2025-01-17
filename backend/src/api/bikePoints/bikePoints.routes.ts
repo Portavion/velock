@@ -6,6 +6,11 @@ import { authenticate } from "../../middleware/middlewares";
 
 // GET
 bikePointsRoutes.get("/", authenticate, bikePointsHandler.getAllBikePointsData);
+bikePointsRoutes.get(
+  "/searchAdress",
+  authenticate,
+  bikePointsHandler.getBikePointByAdress,
+);
 
 //POST
 
