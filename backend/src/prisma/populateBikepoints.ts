@@ -19,7 +19,7 @@ async function formatBikePointData(): Promise<any> {
       lon: bikePoint.lon,
     }));
   } catch (error) {
-    throw new Error("Error getting bike point data");
+    console.log(error);
   }
 }
 

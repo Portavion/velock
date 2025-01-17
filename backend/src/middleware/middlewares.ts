@@ -1,46 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
-import jwt from "jsonwebtoken";
-import prisma from "../prisma/prisma";
 import { User } from "@prisma/client";
 import passport from "passport";
 
 dotenv.config();
-const SECRET_KEY: jwt.Secret = process.env.SECRET_KEY || "YOUR_SECRET";
 
-// Custom JWT authentication middleware
-async function verifyJWT(req: Request, res: Response, next: NextFunction) {
-  if (req.headers) {
-    const token = req.headers.authorization;
-
-    if (!token) {
-      return res.status(400).json({ error: "No token provided" });
-    }
-
-    return jwt.verify(
-      token,
-      SECRET_KEY,
-      async (err: any, decoded: any): Promise<void> => {
-        if (err) {
-          res.status(400).json({ error: err });
-        }
-
-        req.body.id = decoded.id;
-
-        const user = await prisma.user.findUnique({
-          where: { id: req.body.id },
-        });
-
-        if (!user) {
-          res.status(400).json({ error: "User not exists" });
-        }
-        next();
-      },
-    );
-  }
-  return res.status(400).json({ error: "No headers provided" });
-}
-
+// Custom
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
   passport.authenticate("jwt", { session: false }, (err: Error, user: User) => {
     if (err) {
@@ -64,4 +29,4 @@ const errorHandler = (
   res.status(500).send({ errors: [{ message: "Something went wrong" }] });
 };
 
-export { verifyJWT, authenticate, errorHandler };
+export { authenticate, errorHandler };
