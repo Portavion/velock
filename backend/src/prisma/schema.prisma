@@ -14,14 +14,15 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
-  username String @unique
+  id            Int             @id @default(autoincrement())
+  email         String          @unique
+  password      String
+  username      String          @unique
+  BikePointList BikePointList[]
 }
 
 model BikePoint {
-  id           String     @id
+  id           String  @id
   commonName   String
   locked       Boolean @default(false)
   bikes        String
@@ -31,4 +32,12 @@ model BikePoint {
   ebikes       String
   lat          Float
   lon          Float
+}
+
+model BikePointList {
+  id            Int      @id @default(autoincrement())
+  name          String
+  user          User?    @relation(fields: [userId], references: [id])
+  bikePointsIds String[] @default([])
+  userId        Int?
 }

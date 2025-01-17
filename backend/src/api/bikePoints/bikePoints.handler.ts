@@ -13,13 +13,12 @@ interface BikePointsHandler {
 
 const bikePointsHandler: BikePointsHandler = {
   getAllBikePointsData: async (
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction,
   ): Promise<void> => {
     try {
       const bikePointsData = await fetchTflData();
-      console.log(`Received request from ${req.ip}`);
       res.status(200).json({ bikePointsData });
     } catch (error) {
       next(error);
