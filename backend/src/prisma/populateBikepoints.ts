@@ -5,16 +5,15 @@ import prisma from "./prisma";
 async function formatBikePointData(): Promise<any> {
   try {
     const bikePointsData: any = await fetchTflData();
-
     return bikePointsData.map((bikePoint: any) => ({
       id: bikePoint.id,
       commonName: bikePoint.commonName,
-      locked: bikePoint.additionalProperties[2].value,
-      bikes: bikePoint.additionalProperties[6].value,
-      emptyDocks: bikePoint.additionalProperties[7].value,
-      docks: bikePoint.additionalProperties[8].value,
-      standardBike: bikePoint.additionalProperties[9].value,
-      ebikes: bikePoint.additionalProperties[10].value,
+      locked: bikePoint.locked,
+      bikes: bikePoint.NbBikes,
+      emptyDocks: bikePoint.NbEmptyDocks,
+      docks: bikePoint.NbDocks,
+      standardBike: bikePoint.NbStandardBikes,
+      ebikes: bikePoint.NbEBikes,
       lat: bikePoint.lat,
       lon: bikePoint.lon,
     }));

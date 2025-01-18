@@ -53,7 +53,7 @@ app.use(function (_req, res, next) {
   next();
 });
 
-setInterval(updateBikePointsTable, 1000 * 30); // updates every minute 1000ms * 60s
+setInterval(updateBikePointsTable, 1000 * 30); // updates every 30s: 1000ms * 30s
 
 app.use("/api/v1/", apiV1Router);
 app.use(errorHandler);
