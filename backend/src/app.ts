@@ -6,6 +6,7 @@ import passport from "passport";
 import prisma from "./prisma/prisma";
 import helmet from "helmet";
 import { errorHandler } from "./middleware/middlewares";
+const cors = require("cors"); // Import the cors package
 
 import apiV1Router from "./routes";
 import { updateBikePointsTable } from "./prisma/populateBikepoints";
@@ -39,19 +40,32 @@ passport.use(
 const app: Application = express();
 const port = process.env.PORT || 3000;
 
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" }, // Allow cross-origin requests
+  }),
+);
+
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Allow requests from this origin
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allow these methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow these headers
+  }),
+);
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use(function (_req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept",
-  );
-  next();
-});
+//app.use(function (_req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept",
+//   );
+//   next();
+// });
 
 setInterval(updateBikePointsTable, 1000 * 30); // updates every 30s: 1000ms * 30s
 

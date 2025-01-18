@@ -50,7 +50,6 @@ const bikePointsListsHandler: BikePointsListsHandler = {
 
     try {
       const bikePointsLists = await selectAllBikePointsLists(userId);
-      console.log(bikePointsLists);
       res.status(200).json({ bikePointsLists });
     } catch (error) {
       next(error);
