@@ -4,8 +4,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import App from "./App.tsx";
 
-import SignupForm from "./components/SignupForm/SignupForm.tsx";
-import LoginForm from "./components/LoginForm/LoginForm.tsx";
+import { SignupForm } from "./features/auth/SignupForm/SignupForm.tsx";
+import { LoginForm } from "./features/auth/LoginForm/LoginForm.tsx";
 
 const router = createBrowserRouter([
   {

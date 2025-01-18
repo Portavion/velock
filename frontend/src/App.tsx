@@ -1,27 +1,18 @@
-import velockLogo from "../public/velock-logo.png";
 import "./App.css";
+// import { useState, useEffect } from "react";
+
+import Login from "./pages/Login.tsx";
+import Home from "./pages/Home.tsx";
+import { useRetrieveJWT } from "./utils/retrieveJWT.tsx";
 
 function App() {
-  return (
-    <>
-      <div>
-        <img src={velockLogo} className="logo" alt="Velock logo" />
-      </div>
+  const jwtToken = useRetrieveJWT();
 
-      <h2>Velock</h2>
-
-      <div className="card">
-        <p>
-          <a href="/login">Login</a>
-        </p>
-        <p className="smallText">
-          Don't have an account?
-          <br />
-          <a href="/signup">Signup</a>
-        </p>
-      </div>
-    </>
-  );
+  if (jwtToken === "") {
+    return <Login />;
+  } else {
+    return <Home />;
+  }
 }
 
 export default App;

@@ -1,16 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./LoginForm.module.css";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate();
-
   function submitLogin(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
-
     fetch("http://localhost:3000/api/v1/auth/login", {
       method: "POST",
       headers: {
@@ -22,10 +18,9 @@ function LoginForm() {
       .then((data) => {
         if (data.success === true) {
           localStorage.setItem("jwt-token", data.token);
-          console.log(data.token);
           setEmail("");
           setPassword("");
-          navigate("/");
+          window.location.reload();
         } else {
           alert(data.message);
         }
@@ -63,4 +58,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export { LoginForm };
