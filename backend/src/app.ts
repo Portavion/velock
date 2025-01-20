@@ -57,16 +57,6 @@ app.use(
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-//app.use(function (_req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept",
-//   );
-//   next();
-// });
-
 setInterval(updateBikePointsTable, 1000 * 30); // updates every 30s: 1000ms * 30s
 
 app.use("/api/v1/", apiV1Router);
