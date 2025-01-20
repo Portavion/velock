@@ -9,6 +9,9 @@ function Searchbar() {
         type="text"
         placeholder="Search address, postcode.."
       />
+      <button type="button" className={styles.addButton}>
+        &#128269;
+      </button>
     </>
   );
 }
