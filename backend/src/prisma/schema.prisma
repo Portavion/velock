@@ -19,16 +19,16 @@ model User {
 }
 
 model BikePoint {
-  id           String  @id
-  commonName   String
-  locked       Boolean @default(false)
-  bikes        String
-  emptyDocks   String
-  docks        String
-  standardBike String
-  ebikes       String
-  lat          Float
-  lon          Float
+  id              String  @id
+  commonName      String
+  locked          Boolean @default(false)
+  NbBikes         Int
+  NbEmptyDocks    Int
+  NbDocks         Int
+  NbStandardBikes Int
+  NbEbikes        Int
+  lat             Float
+  lon             Float
 }
 
 model BikePointList {

@@ -50,7 +50,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
 
     try {
       const bikePointsLists = await selectAllBikePointsLists(userId);
-      res.status(200).json({ bikePointsLists });
+      res.status(200).json(bikePointsLists);
     } catch (error) {
       next(error);
     }
@@ -81,7 +81,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
     } else {
       try {
         const newBikePointList = await createBikePointsList(listName, user?.id);
-        res.status(200).json({ newBikePointList });
+        res.status(200).json(newBikePointList);
       } catch (error) {
         next(error);
       }
@@ -119,7 +119,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
           listName,
           bikePointsList.length >= 1 ? bikePointsList : [],
         );
-        res.status(200).json({ updatedBikePointList });
+        res.status(200).json(updatedBikePointList);
       } catch (error) {
         next(error);
       }
@@ -131,10 +131,10 @@ const bikePointsListsHandler: BikePointsListsHandler = {
     res: Response,
     next: NextFunction,
   ): Promise<void> => {
-    const listId: number = parseInt(req.body.listId);
+    const listName: string = req.body.listName;
     const user: User = req.user as User;
 
-    if (!listId || !user) {
+    if (!listName || !user) {
       res.status(401).json({
         message: "Error: List creation requires a name and a user id ",
       });
@@ -151,10 +151,10 @@ const bikePointsListsHandler: BikePointsListsHandler = {
     } else {
       try {
         const deletedBikePointList = await deleteBikePointsList(
-          listId,
+          listName,
           user?.id,
         );
-        res.status(200).json({ deletedBikePointList });
+        res.status(200).json(deletedBikePointList);
       } catch (error) {
         next(error);
       }

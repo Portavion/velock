@@ -10,6 +10,11 @@ interface BikePointsHandler {
     res: Response,
     next: NextFunction,
   ): Promise<void>;
+  getBikePointData(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void>;
   getBikePointByAdress(
     req: Request,
     res: Response,
@@ -25,9 +30,30 @@ const bikePointsHandler: BikePointsHandler = {
   ): Promise<void> => {
     try {
       const bikePointsData = await fetchTflData();
-      res.status(200).json({ bikePointsData });
+      //TODO: refactor proper export
+      res.status(200).json(bikePointsData);
     } catch (error) {
       next(error);
+    }
+  },
+
+  getBikePointData: async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    const bikePointId = String(req.query.id);
+
+    if (bikePointId) {
+      try {
+        const bikePointData = await prisma.bikePoint.findUnique({
+          where: { id: bikePointId },
+        });
+        //TODO: refactor proper export
+        res.status(200).json(bikePointData);
+      } catch (error) {
+        next(error);
+      }
     }
   },
 
@@ -68,7 +94,7 @@ FROM "BikePoint"
 ORDER BY distance 
 LIMIT ${limit};
     `;
-        res.status(200).json({ closestBikePoints });
+        res.status(200).json(closestBikePoints);
       } catch (error) {
         next(error);
       }
