@@ -10,9 +10,9 @@ function App() {
 
   if (jwtToken === "") {
     return <Login />;
-  } else {
-    return <Home />;
   }
+
+  return <Home />;
 }
 
 export default App;

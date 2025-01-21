@@ -17,39 +17,7 @@ function BikePointDropdown({
   setActiveList: React.Dispatch<React.SetStateAction<string | undefined>>;
   token: string;
 }) {
-  if (bikePointLists) {
-    return (
-      <div className="dropdown">
-        <select
-          className={styles.dropdown}
-          name="BikePointListsDropdown"
-          id="BikePointListsDropdown"
-          value={activeListName}
-          onChange={(e) => setActiveList(e.target.value)}
-        >
-          {bikePointLists.map((list) => (
-            <option key={list.id} value={list.name}>
-              {list.name}
-            </option>
-          ))}
-        </select>
-
-        <AddListButton
-          bikePointLists={bikePointLists}
-          setBikePointLists={setBikePointLists}
-          token={token}
-          setActiveList={setActiveList}
-        />
-
-        <DeleteListButton
-          activeListName={activeListName}
-          bikePointLists={bikePointLists}
-          setBikePointLists={setBikePointLists}
-          token={token}
-        />
-      </div>
-    );
-  } else {
+  if (!bikePointLists) {
     return (
       <>
         <select
@@ -60,6 +28,38 @@ function BikePointDropdown({
       </>
     );
   }
+
+  return (
+    <div className="dropdown">
+      <select
+        className={styles.dropdown}
+        name="BikePointListsDropdown"
+        id="BikePointListsDropdown"
+        value={activeListName}
+        onChange={(e) => setActiveList(e.target.value)}
+      >
+        {bikePointLists.map((list) => (
+          <option key={list.id} value={list.name}>
+            {list.name}
+          </option>
+        ))}
+      </select>
+
+      <AddListButton
+        bikePointLists={bikePointLists}
+        setBikePointLists={setBikePointLists}
+        token={token}
+        setActiveList={setActiveList}
+      />
+
+      <DeleteListButton
+        activeListName={activeListName}
+        bikePointLists={bikePointLists}
+        setBikePointLists={setBikePointLists}
+        token={token}
+      />
+    </div>
+  );
 }
 
 export { BikePointDropdown };
