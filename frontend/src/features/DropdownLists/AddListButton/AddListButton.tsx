@@ -26,6 +26,7 @@ export const AddListButton: React.FC<AddListButton> = ({
             body: body,
           },
         );
+
         const newListJSON = (await newListResponse.json()) as BikePointList;
         if (bikePointLists) {
           setBikePointLists([
