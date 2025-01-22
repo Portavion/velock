@@ -62,6 +62,7 @@ const bikePointsHandler: BikePointsHandler = {
     res: Response,
     next: NextFunction,
   ): Promise<void> => {
+    // if the query is less than 7 character, it's likely a postcode which does't return good results with London appended
     const address =
       String(req.query.address).length <= 7
         ? req.query.address
@@ -70,7 +71,7 @@ const bikePointsHandler: BikePointsHandler = {
     const fetchCoordUrl = `https://nominatim.openstreetmap.org/search.php?q=${address}&countrycodes=gb&format=json`;
     let latitude: number;
     let longitude: number;
-    const limit: number = 10;
+    const limit: number = 5;
 
     try {
       const geocodingResponse: FetchResponse = await fetch(fetchCoordUrl);

@@ -5,14 +5,13 @@ import bikePointsHandler from "./bikePoints.handler";
 import { authenticate } from "../../middleware/middlewares";
 
 // GET
-bikePointsRoutes.get("/:id", authenticate, bikePointsHandler.getBikePointData);
-bikePointsRoutes.get("/", authenticate, bikePointsHandler.getAllBikePointsData);
-
 bikePointsRoutes.get(
-  "/searchAdress",
+  "/searchAddress",
   authenticate,
   bikePointsHandler.getBikePointByAdress,
 );
+bikePointsRoutes.get("/:id", authenticate, bikePointsHandler.getBikePointData);
+bikePointsRoutes.get("/", authenticate, bikePointsHandler.getAllBikePointsData);
 
 //POST
 
