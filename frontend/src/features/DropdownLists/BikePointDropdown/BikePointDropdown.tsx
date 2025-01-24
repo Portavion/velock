@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styles from "./BikePointDropdown.module.css";
 import { AddListButton } from "../AddListButton/AddListButton";
 import { DeleteListButton } from "../DeleteListButton/DeleteListButton";
@@ -5,7 +6,7 @@ import { DeleteListButton } from "../DeleteListButton/DeleteListButton";
 function BikePointDropdown({
   bikePointLists,
   setBikePointLists,
-  activeListName,
+  activeList,
   setActiveList,
   token,
 }: {
@@ -13,10 +14,22 @@ function BikePointDropdown({
   setBikePointLists: React.Dispatch<
     React.SetStateAction<BikePointList[] | undefined>
   >;
-  activeListName: string | undefined;
-  setActiveList: React.Dispatch<React.SetStateAction<string | undefined>>;
+  activeList: BikePointList | undefined;
+  setActiveList: React.Dispatch<
+    React.SetStateAction<BikePointList | undefined>
+  >;
   token: string;
 }) {
+  const [activeListName, setActiveListName] = useState("");
+
+  useEffect(() => {
+    if (!activeList) {
+      setActiveListName("");
+    } else {
+      setActiveListName(activeList.name);
+    }
+  }, [activeList]);
+
   if (!bikePointLists) {
     return (
       <>
@@ -36,7 +49,7 @@ function BikePointDropdown({
         name="BikePointListsDropdown"
         id="BikePointListsDropdown"
         value={activeListName}
-        onChange={(e) => setActiveList(e.target.value)}
+        onChange={(e) => setActiveListName(e.target.value)}
       >
         {bikePointLists.map((list) => (
           <option key={list.id} value={list.name}>
@@ -53,10 +66,11 @@ function BikePointDropdown({
       />
 
       <DeleteListButton
-        activeListName={activeListName}
+        activeList={activeList}
         bikePointLists={bikePointLists}
         setBikePointLists={setBikePointLists}
         token={token}
+        // setActiveList={setActiveList}
       />
     </div>
   );

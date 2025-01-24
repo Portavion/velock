@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { getSearchResults } from "../utils/getSearchResults.tsx";
 import { useRetrieveJWT } from "../utils/retrieveJWT";
 
-import { BikePointCard } from "../features/BikePointCards/BikePointCard/BikePointCard";
+import { BikePointResult } from "../features/Searchbar/BikePointResult/BikePointResult";
 
 export function SearchResults() {
   const [searchResults, setSearchResults] = useState<BikePoint[]>();
@@ -17,6 +17,7 @@ export function SearchResults() {
   if (!address) {
     address = "";
   }
+  console.log(address);
 
   useEffect(() => {
     const searchBikePoints = async (token: string, address: string) => {
@@ -30,18 +31,18 @@ export function SearchResults() {
     return <div>No docking stations found.</div>;
   }
 
-  const bikePointCards = searchResults?.map((bikePoint) => {
+  const bikePointResults = searchResults?.map((bikePoint) => {
     return (
       <div key={uuidv4()}>
-        <BikePointCard
+        <BikePointResult
           stationName={bikePoint.commonName}
           bikeLeft={bikePoint.NbBikes}
           ebikeLeft={bikePoint.NbEbikes}
           spaceLeft={bikePoint.NbEmptyDocks}
-        ></BikePointCard>
+        ></BikePointResult>
       </div>
     );
   });
 
-  return <>{bikePointCards}</>;
+  return <>{bikePointResults}</>;
 }

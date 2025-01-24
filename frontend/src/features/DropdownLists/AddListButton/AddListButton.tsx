@@ -38,7 +38,7 @@ export const AddListButton: React.FC<AddListButton> = ({
               userId: newListJSON.userId,
             },
           ]);
-          setActiveList(newListJSON.name);
+          setActiveList(newListJSON);
         }
       } catch (error) {
         console.log(error);

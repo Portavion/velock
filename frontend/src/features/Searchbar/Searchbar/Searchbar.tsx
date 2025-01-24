@@ -2,12 +2,14 @@ import { useState } from "react";
 import styles from "./Searchbar.module.css";
 import { useNavigate } from "react-router-dom";
 
-function Searchbar() {
+function Searchbar({ activeListId }: { activeListId: number }) {
   const [address, setAddress] = useState("");
   const navigate = useNavigate();
 
   function redirectToSearchPage() {
-    navigate(`/search?address=${address.replaceAll(" ", "+")}`);
+    navigate(
+      `/search?address=${address.replaceAll(" ", "+")}&?activelist=${activeListId}`,
+    );
   }
   return (
     <>

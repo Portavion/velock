@@ -8,7 +8,7 @@ interface BikePointList {
 }
 
 type DeleteListButton = {
-  activeListName: string | undefined;
+  activeList: BikePointList | undefined;
   bikePointLists: BikePointList[];
   setBikePointLists: React.Dispatch<
     React.SetStateAction<BikePointList[] | undefined>
@@ -21,7 +21,9 @@ type AddListButton = {
   setBikePointLists: React.Dispatch<
     React.SetStateAction<BikePointList[] | undefined>
   >;
-  setActiveList: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setActiveList: React.Dispatch<
+    React.SetStateAction<BikePointList | undefined>
+  >;
   token: string;
 };
 

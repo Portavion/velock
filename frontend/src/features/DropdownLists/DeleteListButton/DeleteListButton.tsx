@@ -2,13 +2,13 @@ import styles from "./DeleteListButton.module.css";
 import React from "react";
 
 export const DeleteListButton: React.FC<DeleteListButton> = ({
-  activeListName,
+  activeList,
   bikePointLists,
   setBikePointLists,
   token,
 }) => {
   async function deleteList(): Promise<void> {
-    const listToDeleteName = activeListName;
+    const listToDeleteName = activeList?.name;
     const listToDeleteId = bikePointLists?.filter(
       (list) => list.name === listToDeleteName,
     );

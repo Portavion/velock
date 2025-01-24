@@ -1,7 +1,7 @@
-async function loadBikePoints(token: string, activeList: BikePointList[]) {
+async function loadBikePoints(token: string, activeList: BikePointList) {
   const bikePoints: BikePoint[] = [];
   try {
-    for (const bikePointId of activeList[0].bikePointsIds) {
+    for (const bikePointId of activeList.bikePointsIds) {
       const bikePointResponse = await fetch(
         `http://localhost:3000/api/v1/bikepoints/id/?id=${bikePointId}`,
         {
