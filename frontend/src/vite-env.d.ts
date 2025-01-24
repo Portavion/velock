@@ -9,6 +9,9 @@ interface BikePointList {
 
 type DeleteListButton = {
   activeList: BikePointList | undefined;
+  setActiveList: React.Dispatch<
+    React.SetStateAction<BikePointList | undefined>
+  >;
   bikePointLists: BikePointList[];
   setBikePointLists: React.Dispatch<
     React.SetStateAction<BikePointList[] | undefined>

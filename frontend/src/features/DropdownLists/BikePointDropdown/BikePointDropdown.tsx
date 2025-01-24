@@ -41,6 +41,13 @@ function BikePointDropdown({
       </>
     );
   }
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setActiveListName(e.target.value);
+    const updatedActiveList = bikePointLists?.filter(
+      (list) => list.name === e.target.value,
+    ) as BikePointList[];
+    setActiveList(updatedActiveList[0]);
+  };
 
   return (
     <div className="dropdown">
@@ -49,7 +56,7 @@ function BikePointDropdown({
         name="BikePointListsDropdown"
         id="BikePointListsDropdown"
         value={activeListName}
-        onChange={(e) => setActiveListName(e.target.value)}
+        onChange={handleChange}
       >
         {bikePointLists.map((list) => (
           <option key={list.id} value={list.name}>
@@ -67,6 +74,7 @@ function BikePointDropdown({
 
       <DeleteListButton
         activeList={activeList}
+        setActiveList={setActiveList}
         bikePointLists={bikePointLists}
         setBikePointLists={setBikePointLists}
         token={token}

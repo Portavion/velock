@@ -131,12 +131,12 @@ const bikePointsListsHandler: BikePointsListsHandler = {
     res: Response,
     next: NextFunction,
   ): Promise<void> => {
-    const listName: string = req.body.listName;
+    const listId: number = Number(req.body.listId);
     const user: User = req.user as User;
 
-    if (!listName || !user) {
+    if (!listId || !user) {
       res.status(401).json({
-        message: "Error: List creation requires a name and a user id ",
+        message: "Error: List creation requires an id and a user id ",
       });
     }
 
@@ -151,7 +151,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
     } else {
       try {
         const deletedBikePointList = await deleteBikePointsList(
-          listName,
+          listId,
           user?.id,
         );
         res.status(200).json(deletedBikePointList);

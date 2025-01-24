@@ -5,20 +5,17 @@ export const DeleteListButton: React.FC<DeleteListButton> = ({
   activeList,
   bikePointLists,
   setBikePointLists,
+  // setActiveList,
   token,
 }) => {
   async function deleteList(): Promise<void> {
     const listToDeleteName = activeList?.name;
-    const listToDeleteId = bikePointLists?.filter(
-      (list) => list.name === listToDeleteName,
-    );
-    if (listToDeleteId) {
+    if (activeList) {
       try {
-        console.log(listToDeleteId);
         const body =
           encodeURIComponent("listId") +
           "=" +
-          encodeURIComponent(listToDeleteId[0].id);
+          encodeURIComponent(activeList.id);
         const deleteListResponse = await fetch(
           "http://localhost:3000/api/v1/bikepointslists",
           {

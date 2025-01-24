@@ -29,12 +29,18 @@ async function updateBikePointsList(
 }
 
 async function deleteBikePointsList(
-  listName: string,
+  listId: number,
   userId: number,
-): Promise<void> {
-  await prisma.bikePointList.deleteMany({
-    where: { name: listName, userId: userId },
-  });
+): Promise<BikePointList | null> {
+  if (!listId) {
+    console.log("invalid name");
+    return null;
+  } else {
+    const deleteResponse = await prisma.bikePointList.delete({
+      where: { id: listId, userId: userId },
+    });
+    return deleteResponse;
+  }
 }
 
 export {
