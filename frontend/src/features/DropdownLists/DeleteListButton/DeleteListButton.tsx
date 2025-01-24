@@ -5,7 +5,7 @@ export const DeleteListButton: React.FC<DeleteListButton> = ({
   activeList,
   bikePointLists,
   setBikePointLists,
-  // setActiveList,
+  setActiveList,
   token,
 }) => {
   async function deleteList(): Promise<void> {
@@ -36,6 +36,7 @@ export const DeleteListButton: React.FC<DeleteListButton> = ({
           ) as BikePointList[];
 
           setBikePointLists([...updatedBikePointList]);
+          setActiveList(updatedBikePointList[0]);
         }
       } catch (error) {
         console.log(error);
