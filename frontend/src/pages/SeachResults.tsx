@@ -13,11 +13,13 @@ export function SearchResults() {
   const token = useRetrieveJWT();
 
   let address = searchParams.get("address")?.replaceAll(" ", "+");
+  const activeListId = searchParams.get("activelist")
+    ? Number(searchParams.get("activelist"))
+    : null;
 
   if (!address) {
     address = "";
   }
-  console.log(address);
 
   useEffect(() => {
     const searchBikePoints = async (token: string, address: string) => {
@@ -36,9 +38,11 @@ export function SearchResults() {
       <div key={uuidv4()}>
         <BikePointResult
           stationName={bikePoint.commonName}
+          stationId={bikePoint.id}
           bikeLeft={bikePoint.NbBikes}
           ebikeLeft={bikePoint.NbEbikes}
           spaceLeft={bikePoint.NbEmptyDocks}
+          activeListId={activeListId}
         ></BikePointResult>
       </div>
     );

@@ -8,7 +8,7 @@ function Searchbar({ activeListId }: { activeListId: number }) {
 
   function redirectToSearchPage() {
     navigate(
-      `/search?address=${address.replaceAll(" ", "+")}&?activelist=${activeListId}`,
+      `/search?address=${address.replaceAll(" ", "+")}&activelist=${activeListId}`,
     );
   }
   return (

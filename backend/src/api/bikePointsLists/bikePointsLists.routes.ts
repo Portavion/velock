@@ -20,11 +20,16 @@ bikePointsListsRoutes.post(
 
 //PUT
 bikePointsListsRoutes.put(
-  "/",
+  "/name",
   authenticate,
-  bikePointsListsHandler.updateBikePointsList,
+  bikePointsListsHandler.updateBikePointsListName,
 );
 
+bikePointsListsRoutes.put(
+  "/",
+  authenticate,
+  bikePointsListsHandler.updateBikePointsListAdd,
+);
 //DELETE
 bikePointsListsRoutes.delete(
   "/",

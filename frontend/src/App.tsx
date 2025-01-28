@@ -1,5 +1,4 @@
 import "./App.css";
-// import { useState, useEffect } from "react";
 
 import Login from "./pages/Login.tsx";
 import Home from "./pages/Home.tsx";

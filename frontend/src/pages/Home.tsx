@@ -34,11 +34,11 @@ function LoginPage({
       }
     };
     fetchList();
-  }, [token]);
+  });
 
   useEffect(() => {
     const fetchBikePoints = async () => {
-      if (token && activeList && bikePointLists) {
+      if (token && activeList) {
         const data = await loadBikePoints(token, activeList);
         setBikePoints(data);
       }

@@ -5,7 +5,8 @@ import {
   createBikePointsList,
   selectAllBikePointsLists,
   deleteBikePointsList,
-  updateBikePointsList,
+  updateBikePointsListName,
+  updateBikePointsListAdd,
 } from "./bikePointsLists.db";
 import isUserExists from "../../utils/isUserExists";
 
@@ -20,7 +21,12 @@ interface BikePointsListsHandler {
     res: Response,
     next: NextFunction,
   ): Promise<void>;
-  updateBikePointsList(
+  updateBikePointsListName(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void>;
+  updateBikePointsListAdd(
     req: Request,
     res: Response,
     next: NextFunction,
@@ -88,7 +94,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
     }
   },
 
-  updateBikePointsList: async (
+  updateBikePointsListName: async (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -114,10 +120,47 @@ const bikePointsListsHandler: BikePointsListsHandler = {
       });
     } else {
       try {
-        const updatedBikePointList = await updateBikePointsList(
+        const updatedBikePointList = await updateBikePointsListName(
           listId,
           listName,
           bikePointsList.length >= 1 ? bikePointsList : [],
+        );
+        res.status(200).json(updatedBikePointList);
+      } catch (error) {
+        next(error);
+      }
+    }
+  },
+
+  updateBikePointsListAdd: async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    const user: User = req.user as User;
+    const listId: number = Number(req.body.listId);
+    const bikePoint: string = req.body.bikePoint || "";
+
+    if (!listId || !user) {
+      res.status(401).json({
+        message:
+          "Error: List creation requires a bike point list and a user id ",
+      });
+    }
+
+    const isUserExist = await isUserExists(user?.id);
+
+    if (!isUserExist) {
+      res.status(404).json({
+        status: 404,
+        success: false,
+        message: "Updating lists requires to be logged.",
+      });
+    } else {
+      try {
+        const updatedBikePointList = await updateBikePointsListAdd(
+          listId,
+          bikePoint,
         );
         res.status(200).json(updatedBikePointList);
       } catch (error) {

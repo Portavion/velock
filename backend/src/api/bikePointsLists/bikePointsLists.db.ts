@@ -17,7 +17,7 @@ async function createBikePointsList(
   return newBikePointList;
 }
 
-async function updateBikePointsList(
+async function updateBikePointsListName(
   listId: number,
   listName: string,
   bikePointsIds: string[],
@@ -25,6 +25,19 @@ async function updateBikePointsList(
   return await prisma.bikePointList.update({
     where: { id: listId },
     data: { name: listName, bikePointsIds: bikePointsIds },
+  });
+}
+
+async function updateBikePointsListAdd(
+  listId: number,
+  bikePoint: string,
+): Promise<BikePointList> {
+  // console.log("logging");
+  // console.log(listId);
+  // console.log(bikePoint);
+  return await prisma.bikePointList.update({
+    where: { id: listId },
+    data: { bikePointsIds: { push: bikePoint } },
   });
 }
 
@@ -47,5 +60,6 @@ export {
   selectAllBikePointsLists,
   createBikePointsList,
   deleteBikePointsList,
-  updateBikePointsList,
+  updateBikePointsListName,
+  updateBikePointsListAdd,
 };

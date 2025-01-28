@@ -13,6 +13,7 @@
   overflow: visible;
   margin-bottom: 10px;
 }
+
 h3 {
   padding-bottom: 0.5rem;
   font-size: 1rem;
@@ -25,14 +26,17 @@ p {
 
 p {
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
+
 p.available {
   color: green;
 }
+
 p.empty {
   color: red;
 }
+
 .availableContainer {
   display: flex;
   flex-direction: row;
@@ -40,4 +44,9 @@ p.empty {
   justify-content: center;
   gap: 0.9rem;
   margin-bottom: 0.5rem;
+}
+
+.addButton {
+  background-color: olive;
+  font-size: 0.7rem;
 }
