@@ -6,8 +6,7 @@ async function getSearchResults(
   const formatedAddress = address.replaceAll(" ", "+");
   try {
     const bikePointResponse = await fetch(
-      `http://localhost:3000/api/v1/bikepoints/searchAddress/?address=${formatedAddress}`,
-      // "http://localhost:3000/api/v1/bikepoints/searchAddress/?address=235+old+ford+road",
+      `${import.meta.env.VITE_BASE_URL}/api/v1/bikepoints/searchAddress/?address=${formatedAddress}`,
       {
         method: "GET",
         headers: {

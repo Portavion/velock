@@ -49,7 +49,7 @@ function LoginPage({
   if (!activeList) {
     return (
       <>
-        <Searchbar activeListId={0} />;
+        <Searchbar activeListId={0} />
         <BikePointDropdown
           bikePointLists={bikePointLists}
           setBikePointLists={setBikePointLists}

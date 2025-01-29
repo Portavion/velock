@@ -13,7 +13,7 @@ function SignupForm() {
   function submitNewUser(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
-    fetch("http://localhost:3000/api/v1/users", {
+    fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/users`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

@@ -10,7 +10,7 @@ async function addToList(
     .join("&");
 
   try {
-    await fetch(`http://localhost:3000/api/v1/bikepointslists/`, {
+    await fetch(`${process.env.VITE_BASE_URL}/api/v1/bikepointslists/`, {
       method: "PUT",
       headers: {
         "content-type": "application/x-www-form-urlencoded",

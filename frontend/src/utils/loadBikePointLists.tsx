@@ -1,7 +1,7 @@
 async function loadBikePointLists(token: string) {
   try {
     const bikePointListsResponse = await fetch(
-      "http://localhost:3000/api/v1/bikepointslists",
+      `${import.meta.env.VITE_BASE_URL}/api/v1/bikepointslists`,
       {
         method: "GET",
         headers: {

@@ -16,7 +16,7 @@ export const AddListButton: React.FC<AddListButton> = ({
           "=" +
           encodeURIComponent(newListName);
         const newListResponse = await fetch(
-          "http://localhost:3000/api/v1/bikepointslists",
+          `${import.meta.env.VITE_BASE_URL}/api/v1/bikepointslists`,
           {
             method: "POST",
             headers: {

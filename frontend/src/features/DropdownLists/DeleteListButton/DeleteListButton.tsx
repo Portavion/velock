@@ -17,7 +17,7 @@ export const DeleteListButton: React.FC<DeleteListButton> = ({
           "=" +
           encodeURIComponent(activeList.id);
         const deleteListResponse = await fetch(
-          "http://localhost:3000/api/v1/bikepointslists",
+          `${import.meta.env.VITE_BASE_URL}/api/v1/bikepointslists`,
           {
             method: "DELETE",
             headers: {
@@ -29,7 +29,6 @@ export const DeleteListButton: React.FC<DeleteListButton> = ({
         );
         const isListDeleted =
           (await deleteListResponse.json()) as BikePointList;
-        console.log("deleted list response:" + isListDeleted);
         if (isListDeleted) {
           const updatedBikePointList = bikePointLists?.filter(
             (list) => list.name !== listToDeleteName,

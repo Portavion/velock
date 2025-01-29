@@ -3,7 +3,7 @@ async function loadBikePoints(token: string, activeList: BikePointList) {
   try {
     for (const bikePointId of activeList.bikePointsIds) {
       const bikePointResponse = await fetch(
-        `http://localhost:3000/api/v1/bikepoints/id/?id=${bikePointId}`,
+        `${import.meta.env.VITE_BASE_URL}/api/v1/bikepoints/id/?id=${bikePointId}`,
         {
           method: "GET",
           headers: {
