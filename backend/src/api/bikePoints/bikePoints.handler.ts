@@ -76,11 +76,16 @@ const bikePointsHandler: BikePointsHandler = {
     try {
       const geocodingResponse: FetchResponse = await fetch(fetchCoordUrl);
       const geocodingResults = (await geocodingResponse.json()) as {
-        lat: number;
-        lon: number;
+        lat: number | undefined;
+        lon: number | undefined;
       }[];
 
       const bestGeocodingResult = geocodingResults[0];
+
+      if (!bestGeocodingResult) {
+        res.status(400).json("No station found");
+        return;
+      }
       latitude = Number(bestGeocodingResult.lat);
       longitude = Number(bestGeocodingResult.lon);
 

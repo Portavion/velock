@@ -24,13 +24,20 @@ export function SearchResults() {
   useEffect(() => {
     const searchBikePoints = async (token: string, address: string) => {
       const data = await getSearchResults(token, address);
-      setSearchResults(data);
+      if (data[0].commonName) {
+        setSearchResults(data);
+      }
     };
     searchBikePoints(token, address);
   }, [token, address]);
 
   if (!searchResults) {
-    return <div>No docking stations found.</div>;
+    return (
+      <>
+        <div>No docking stations found.</div>
+        <a href="/">Go back</a>
+      </>
+    );
   }
 
   const bikePointResults = searchResults?.map((bikePoint) => {
