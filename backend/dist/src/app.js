@@ -7,7 +7,8 @@ const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const passport_jwt_1 = require("passport-jwt");
 const passport_1 = __importDefault(require("passport"));
-const prisma_1 = __importDefault(require("./prisma/prisma"));
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
 const helmet_1 = __importDefault(require("helmet"));
 const middlewares_1 = require("./middleware/middlewares");
 const cors = require("cors");
@@ -19,7 +20,7 @@ passport_1.default.use(new passport_jwt_1.Strategy({
     secretOrKey: process.env.SECRET_KEY || "YOUR_SECRET",
 }, async (payload, done) => {
     try {
-        const user = await prisma_1.default.user.findUnique({
+        const user = await prisma.user.findUnique({
             where: { id: payload.id },
         });
         if (user) {

@@ -2,7 +2,8 @@
 import { NextFunction, Request, Response } from "express";
 import fetch, { Response as FetchResponse } from "node-fetch";
 import fetchTflData from "../../utils/fetchTflData";
-import prisma from "../../prisma/prisma";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 interface BikePointsHandler {
   getAllBikePointsData(

@@ -36,7 +36,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const prisma_1 = __importDefault(require("../../prisma/prisma"));
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
 const dotenv_1 = __importDefault(require("dotenv"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcrypt = __importStar(require("bcryptjs"));
@@ -47,7 +48,7 @@ const authHandler = {
             const user = req.body;
             const { email, password } = user;
             let isPasswordMatched;
-            const isUserExist = await prisma_1.default.user.findUnique({
+            const isUserExist = await prisma.user.findUnique({
                 where: { email: email },
             });
             if (!isUserExist) {

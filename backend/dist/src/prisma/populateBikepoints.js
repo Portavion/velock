@@ -5,7 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateBikePointsTable = updateBikePointsTable;
 const fetchTflData_1 = __importDefault(require("../utils/fetchTflData"));
-const prisma_1 = __importDefault(require("./prisma"));
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
 async function formatBikePointData() {
     try {
         const bikePointsData = await (0, fetchTflData_1.default)();
@@ -36,7 +37,7 @@ async function populateBikePointsTable() {
     if (data) {
         for (let bikePoint of data) {
             try {
-                await prisma_1.default.bikePoint.create({
+                await prisma.bikePoint.create({
                     data: {
                         id: bikePoint.id,
                         commonName: bikePoint.commonName,
@@ -62,7 +63,7 @@ async function populateBikePointsTable() {
 }
 async function updateBikePointsTable() {
     const data = await formatBikePointData();
-    const isPopulated = (await prisma_1.default.bikePoint.count()) ? true : false;
+    const isPopulated = (await prisma.bikePoint.count()) ? true : false;
     if (!isPopulated) {
         try {
             await populateBikePointsTable();
@@ -78,7 +79,7 @@ async function updateBikePointsTable() {
     else {
         for (let bikePoint of data) {
             try {
-                await prisma_1.default.bikePoint.update({
+                await prisma.bikePoint.update({
                     where: { id: bikePoint.id },
                     data: {
                         id: bikePoint.id,

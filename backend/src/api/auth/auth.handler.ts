@@ -1,6 +1,7 @@
 //TODO: refactor: extract business logic into services / workers
 import { NextFunction, Request, Response } from "express";
-import prisma from "../../prisma/prisma";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 import { User } from "@prisma/client";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";

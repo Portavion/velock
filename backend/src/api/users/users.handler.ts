@@ -1,6 +1,7 @@
 //TODO: refactor: extract business logic into services / workers
 import { NextFunction, Request, Response } from "express";
-import prisma from "../../prisma/prisma";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 import * as bcrypt from "bcryptjs";
 
 interface UsersHandler {

@@ -3,7 +3,8 @@ import express, { Application } from "express";
 import dotenv from "dotenv";
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 import passport from "passport";
-import prisma from "./prisma/prisma";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 import helmet from "helmet";
 import { errorHandler } from "./middleware/middlewares";
 const cors = require("cors"); // Import the cors package

@@ -5,7 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const fetchTflData_1 = __importDefault(require("../../utils/fetchTflData"));
-const prisma_1 = __importDefault(require("../../prisma/prisma"));
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
 const bikePointsHandler = {
     getAllBikePointsData: async (_req, res, next) => {
         try {
@@ -20,7 +21,7 @@ const bikePointsHandler = {
         const bikePointId = String(req.query.id);
         if (bikePointId) {
             try {
-                const bikePointData = await prisma_1.default.bikePoint.findUnique({
+                const bikePointData = await prisma.bikePoint.findUnique({
                     where: { id: bikePointId },
                 });
                 res.status(200).json(bikePointData);
@@ -49,7 +50,7 @@ const bikePointsHandler = {
             latitude = Number(bestGeocodingResult.lat);
             longitude = Number(bestGeocodingResult.lon);
             try {
-                const closestBikePoints = await prisma_1.default.$queryRaw `
+                const closestBikePoints = await prisma.$queryRaw `
 SELECT *, 
        ST_Distance(
          ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326),

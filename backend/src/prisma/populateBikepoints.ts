@@ -1,5 +1,6 @@
 import fetchTflData from "../utils/fetchTflData";
-import prisma from "./prisma";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 import { BikePoint, BikePointTfL } from "../types";
 
 //TODO: type for tfl response

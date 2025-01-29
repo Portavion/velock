@@ -1,5 +1,6 @@
 import { BikePointList } from "@prisma/client";
-import prisma from "../../prisma/prisma";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 async function selectAllBikePointsLists(
   userId: number,

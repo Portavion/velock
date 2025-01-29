@@ -32,16 +32,14 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const prisma_1 = __importDefault(require("../../prisma/prisma"));
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
 const bcrypt = __importStar(require("bcryptjs"));
 const usersHandler = {
     getUsers: async (_req, res, next) => {
         try {
-            const users = await prisma_1.default.user.findMany();
+            const users = await prisma.user.findMany();
             res.status(200).json({ users });
         }
         catch (error) {
@@ -63,7 +61,7 @@ const usersHandler = {
             }
             else {
                 try {
-                    const newUser = await prisma_1.default.user.create({
+                    const newUser = await prisma.user.create({
                         data: {
                             username: username,
                             email: email,
