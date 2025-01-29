@@ -50,9 +50,9 @@ function BikePointDropdown({
   };
 
   return (
-    <div className="dropdown">
+    <div className={styles.dropdown}>
       <select
-        className={styles.dropdown}
+        className={styles.dropdownInput}
         name="BikePointListsDropdown"
         id="BikePointListsDropdown"
         value={activeListName}

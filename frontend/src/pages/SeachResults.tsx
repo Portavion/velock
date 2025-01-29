@@ -48,5 +48,11 @@ export function SearchResults() {
     );
   });
 
-  return <>{bikePointResults}</>;
+  return (
+    <>
+      {bikePointResults}
+
+      <a href="/">Go back</a>
+    </>
+  );
 }

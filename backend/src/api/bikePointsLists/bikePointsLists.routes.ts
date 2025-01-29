@@ -36,5 +36,10 @@ bikePointsListsRoutes.delete(
   authenticate,
   bikePointsListsHandler.deleteBikePointsList,
 );
+bikePointsListsRoutes.delete(
+  "/name",
+  authenticate,
+  bikePointsListsHandler.deleteBikePoint,
+);
 
 export default bikePointsListsRoutes;

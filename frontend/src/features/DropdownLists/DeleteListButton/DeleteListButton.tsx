@@ -45,7 +45,9 @@ export const DeleteListButton: React.FC<DeleteListButton> = ({
   }
   return (
     <button onClick={deleteList} type="button" className={styles.addButton}>
-      Del
+      <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>
+        delete
+      </span>
     </button>
   );
 };

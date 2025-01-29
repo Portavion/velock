@@ -13,21 +13,28 @@ function Searchbar({ activeListId }: { activeListId: number }) {
   }
   return (
     <>
-      <input
-        className={styles.searchbar}
-        type="text"
-        placeholder="Search address, postcode.."
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
-      />
+      <div className={styles.searchContainer}>
+        <input
+          className={styles.searchbar}
+          type="text"
+          placeholder="Search address, postcode.."
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
 
-      <button
-        type="button"
-        onClick={redirectToSearchPage}
-        className={styles.addButton}
-      >
-        &#128269;
-      </button>
+        <button
+          type="button"
+          onClick={redirectToSearchPage}
+          className={styles.addButton}
+        >
+          <span
+            className="material-symbols-outlined"
+            style={{ fontSize: "20px" }}
+          >
+            search
+          </span>
+        </button>
+      </div>
     </>
   );
 }

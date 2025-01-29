@@ -7,6 +7,7 @@ import {
   deleteBikePointsList,
   updateBikePointsListName,
   updateBikePointsListAdd,
+  deleteBikePoint,
 } from "./bikePointsLists.db";
 import isUserExists from "../../utils/isUserExists";
 
@@ -32,6 +33,11 @@ interface BikePointsListsHandler {
     next: NextFunction,
   ): Promise<void>;
   deleteBikePointsList(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void>;
+  deleteBikePoint(
     req: Request,
     res: Response,
     next: NextFunction,
@@ -141,7 +147,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
     const listId: number = Number(req.body.listId);
     const bikePoint: string = req.body.bikePoint || "";
 
-    if (!listId || !user) {
+    if (!listId || !user || !bikePoint) {
       res.status(401).json({
         message:
           "Error: List creation requires a bike point list and a user id ",
@@ -198,6 +204,34 @@ const bikePointsListsHandler: BikePointsListsHandler = {
           user?.id,
         );
         res.status(200).json(deletedBikePointList);
+      } catch (error) {
+        next(error);
+      }
+    }
+  },
+  deleteBikePoint: async (req, res, next): Promise<void> => {
+    const listId: number = Number(req.body.listId);
+    const bikePointName = req.body.bikePoint;
+    const user = req.user as User;
+
+    if (!listId || !user || !bikePointName) {
+      res.status(401).json({
+        message: "Error: List creation requires an id and a user id ",
+      });
+    }
+
+    const isUserExist = await isUserExists(user?.id);
+
+    if (!isUserExist) {
+      res.status(404).json({
+        status: 404,
+        success: false,
+        message: "Adding lists requires to be logged.",
+      });
+    } else {
+      try {
+        const deletedBikePoint = await deleteBikePoint(listId, bikePointName);
+        res.status(200).json(deletedBikePoint);
       } catch (error) {
         next(error);
       }

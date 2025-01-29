@@ -1,42 +1,26 @@
 .addButton {
-  background-color: #e1ecf4;
-  border-radius: 10px;
-  border: 1px solid #7aa7c7;
+  border-radius: 8px;
   box-shadow: rgba(255, 255, 255, 0.7) 0 1px 0 0 inset;
-  box-sizing: border-box;
-  color: #39739d;
-  cursor: pointer;
-  display: inline-block;
+  /*box-sizing: border-box;*/
+  color: slategrey;
   font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans",
     sans-serif;
-  font-size: 10px;
-  font-weight: 400;
-  line-height: 1.15385;
+  font-size: 0.6em;
   margin: 0px 10px;
   outline: none;
-  padding: 8px 0.8em;
-  position: relative;
+  padding: 2px;
   text-align: center;
   text-decoration: none;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  vertical-align: baseline;
-  white-space: nowrap;
 }
 
 .addButton:hover,
 .addButton:focus {
-  background-color: #b3d3ea;
-  color: #2c5777;
+  color: black;
 }
 
 .addButton:focus {
   box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
-}
-
-.addButton:active {
-  background-color: #a0c7e4;
-  box-shadow: none;
-  color: #2c5777;
 }

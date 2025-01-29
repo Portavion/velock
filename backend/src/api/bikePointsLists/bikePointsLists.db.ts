@@ -32,9 +32,6 @@ async function updateBikePointsListAdd(
   listId: number,
   bikePoint: string,
 ): Promise<BikePointList> {
-  // console.log("logging");
-  // console.log(listId);
-  // console.log(bikePoint);
   return await prisma.bikePointList.update({
     where: { id: listId },
     data: { bikePointsIds: { push: bikePoint } },
@@ -56,10 +53,34 @@ async function deleteBikePointsList(
   }
 }
 
+async function deleteBikePoint(
+  listId: number,
+  bikePointName: string,
+): Promise<BikePointList | null> {
+  if (!listId || !bikePointName) {
+    console.log("invalid id or name");
+    return null;
+  } else {
+    const currentList = await prisma.bikePointList.findUnique({
+      where: { id: listId },
+    });
+
+    const filteredList = currentList?.bikePointsIds.filter(
+      (id) => id != bikePointName,
+    );
+
+    const deleteResponse = await prisma.bikePointList.update({
+      where: { id: listId },
+      data: { bikePointsIds: { set: filteredList } },
+    });
+    return deleteResponse;
+  }
+}
 export {
   selectAllBikePointsLists,
   createBikePointsList,
   deleteBikePointsList,
   updateBikePointsListName,
   updateBikePointsListAdd,
+  deleteBikePoint,
 };

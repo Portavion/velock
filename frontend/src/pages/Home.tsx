@@ -34,7 +34,7 @@ function LoginPage({
       }
     };
     fetchList();
-  });
+  }, [token]);
 
   useEffect(() => {
     const fetchBikePoints = async () => {
@@ -45,19 +45,6 @@ function LoginPage({
     };
     fetchBikePoints();
   }, [token, activeList]);
-
-  const bikePointCards = bikePoints?.map((bikePoint) => {
-    return (
-      <div key={uuidv4()}>
-        <BikePointCard
-          stationName={bikePoint.commonName}
-          bikeLeft={bikePoint.NbBikes}
-          ebikeLeft={bikePoint.NbEbikes}
-          spaceLeft={bikePoint.NbEmptyDocks}
-        ></BikePointCard>
-      </div>
-    );
-  });
 
   if (!activeList) {
     return (
@@ -73,6 +60,23 @@ function LoginPage({
       </>
     );
   }
+
+  const bikePointCards = bikePoints?.map((bikePoint) => {
+    return (
+      <div key={uuidv4()}>
+        <BikePointCard
+          token={token}
+          stationName={bikePoint.commonName}
+          stationId={bikePoint.id}
+          list={activeList.id}
+          bikeLeft={bikePoint.NbBikes}
+          ebikeLeft={bikePoint.NbEbikes}
+          spaceLeft={bikePoint.NbEmptyDocks}
+        ></BikePointCard>
+      </div>
+    );
+  });
+
   return (
     <>
       <Searchbar activeListId={activeList.id} />
@@ -83,7 +87,7 @@ function LoginPage({
         setActiveList={setActiveList}
         token={token}
       />
-      {bikePointCards}
+      <div className="cardsContainer">{bikePointCards}</div>
     </>
   );
 }

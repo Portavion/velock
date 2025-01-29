@@ -48,7 +48,9 @@ export const AddListButton: React.FC<AddListButton> = ({
 
   return (
     <button onClick={addList} type="button" className={styles.addButton}>
-      +
+      <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>
+        add
+      </span>
     </button>
   );
 };
