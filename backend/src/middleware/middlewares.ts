@@ -12,7 +12,8 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
       return next(err); // Pass the error to the error handling middleware
     }
     if (!user) {
-      return res.status(401).json({ message: "Unauthorized" }); // Or another appropriate response
+      res.status(401).json({ message: "Unauthorized" }); // Or another appropriate response
+      return;
     }
     req.user = user; // Make the authenticated user available on the request object
     next();
@@ -27,6 +28,7 @@ const errorHandler = (
 ) => {
   console.error(err);
   res.status(500).send({ errors: [{ message: "Something went wrong" }] });
+  return;
 };
 
 export { authenticate, errorHandler };

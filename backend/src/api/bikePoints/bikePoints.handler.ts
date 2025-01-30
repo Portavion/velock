@@ -33,6 +33,7 @@ const bikePointsHandler: BikePointsHandler = {
       const bikePointsData = await fetchTflData();
       //TODO: refactor proper export
       res.status(200).json(bikePointsData);
+      return;
     } catch (error) {
       next(error);
     }
@@ -52,6 +53,7 @@ const bikePointsHandler: BikePointsHandler = {
         });
         //TODO: refactor proper export
         res.status(200).json(bikePointData);
+        return;
       } catch (error) {
         next(error);
       }
@@ -102,6 +104,7 @@ ORDER BY distance
 LIMIT ${limit};
     `;
         res.status(200).json(closestBikePoints);
+        return;
       } catch (error) {
         next(error);
       }

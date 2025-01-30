@@ -34,6 +34,7 @@ const authHandler: AuthHandler = {
           success: false,
           message: "User not found",
         });
+        return;
       } else {
         isPasswordMatched = await bcrypt.compare(
           password,
@@ -47,6 +48,7 @@ const authHandler: AuthHandler = {
           success: false,
           message: "wrong password",
         });
+        return;
       }
 
       // ** if the email and password is valid create a token
@@ -73,12 +75,14 @@ const authHandler: AuthHandler = {
         message: "login successful",
         token: token,
       });
+      return;
     } catch (error: any) {
       // Send the error message to the client
       res.status(400).json({
         status: 400,
         message: error.message.toString(),
       });
+      return;
       next(error);
     }
   },

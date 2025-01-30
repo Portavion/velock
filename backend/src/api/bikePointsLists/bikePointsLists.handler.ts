@@ -56,6 +56,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
       res.status(401).json({
         message: "Error: List creation requires a name and a user id ",
       });
+      return;
     }
 
     const userId: number = Number(user.id);
@@ -63,6 +64,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
     try {
       const bikePointsLists = await selectAllBikePointsLists(userId);
       res.status(200).json(bikePointsLists);
+      return;
     } catch (error) {
       next(error);
     }
@@ -80,6 +82,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
       res.status(401).json({
         message: "Error: List creation requires a name and a user id ",
       });
+      return;
     }
 
     const isUserExist = await isUserExists(user?.id);
@@ -90,10 +93,12 @@ const bikePointsListsHandler: BikePointsListsHandler = {
         success: false,
         message: "Adding lists requires to be logged.",
       });
+      return;
     } else {
       try {
         const newBikePointList = await createBikePointsList(listName, user?.id);
         res.status(200).json(newBikePointList);
+        return;
       } catch (error) {
         next(error);
       }
@@ -114,6 +119,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
       res.status(401).json({
         message: "Error: List creation requires a name and a user id ",
       });
+      return;
     }
 
     const isUserExist = await isUserExists(user?.id);
@@ -124,6 +130,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
         success: false,
         message: "Updating lists requires to be logged.",
       });
+      return;
     } else {
       try {
         const updatedBikePointList = await updateBikePointsListName(
@@ -132,6 +139,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
           bikePointsList.length >= 1 ? bikePointsList : [],
         );
         res.status(200).json(updatedBikePointList);
+        return;
       } catch (error) {
         next(error);
       }
@@ -152,6 +160,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
         message:
           "Error: List creation requires a bike point list and a user id ",
       });
+      return;
     }
 
     const isUserExist = await isUserExists(user?.id);
@@ -162,6 +171,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
         success: false,
         message: "Updating lists requires to be logged.",
       });
+      return;
     } else {
       try {
         const updatedBikePointList = await updateBikePointsListAdd(
@@ -169,6 +179,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
           bikePoint,
         );
         res.status(200).json(updatedBikePointList);
+        return;
       } catch (error) {
         next(error);
       }
@@ -187,6 +198,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
       res.status(401).json({
         message: "Error: List creation requires an id and a user id ",
       });
+      return;
     }
 
     const isUserExist = await isUserExists(user?.id);
@@ -197,6 +209,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
         success: false,
         message: "Adding lists requires to be logged.",
       });
+      return;
     } else {
       try {
         const deletedBikePointList = await deleteBikePointsList(
@@ -204,6 +217,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
           user?.id,
         );
         res.status(200).json(deletedBikePointList);
+        return;
       } catch (error) {
         next(error);
       }
@@ -218,6 +232,7 @@ const bikePointsListsHandler: BikePointsListsHandler = {
       res.status(401).json({
         message: "Error: List creation requires an id and a user id ",
       });
+      return;
     }
 
     const isUserExist = await isUserExists(user?.id);
@@ -228,10 +243,12 @@ const bikePointsListsHandler: BikePointsListsHandler = {
         success: false,
         message: "Adding lists requires to be logged.",
       });
+      return;
     } else {
       try {
         const deletedBikePoint = await deleteBikePoint(listId, bikePointName);
         res.status(200).json(deletedBikePoint);
+        return;
       } catch (error) {
         next(error);
       }

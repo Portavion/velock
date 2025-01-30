@@ -18,6 +18,7 @@ const usersHandler: UsersHandler = {
     try {
       const users = await prisma.user.findMany();
       res.status(200).json({ users });
+      return;
     } catch (error) {
       next(error);
     }
@@ -36,6 +37,7 @@ const usersHandler: UsersHandler = {
       res.status(401).json({
         message: "Error: User creation requires username password and email",
       });
+      return;
     }
 
     bcrypt.hash(password, 10, async (error, hashedPassword: string) => {
@@ -54,6 +56,7 @@ const usersHandler: UsersHandler = {
             message: `success`,
             newUser: newUser,
           });
+          return;
         } catch (errors) {
           next(errors);
         }
