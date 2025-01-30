@@ -2,7 +2,7 @@
 import { NextFunction, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-import bcrypt from "bcryptjs";
+import { default as bcrypt } from "bcryptjs";
 
 interface UsersHandler {
   getUsers(req: Request, res: Response, next: NextFunction): Promise<void>;

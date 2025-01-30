@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 import { User } from "@prisma/client";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
+import { default as bcrypt } from "bcryptjs";
 
 dotenv.config();
 
