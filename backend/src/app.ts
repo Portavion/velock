@@ -50,7 +50,11 @@ app.use(
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // Allow requests from this origin
+    origin: [
+      "http://localhost:5173",
+      "http://bike.portavion.net",
+      "https://bike.portavion.net",
+    ], // Allow requests from this origin
     methods: ["GET", "POST", "PUT", "DELETE"], // Allow these methods
     allowedHeaders: ["Content-Type", "Authorization"], // Allow these headers
   }),
