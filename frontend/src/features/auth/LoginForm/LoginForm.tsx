@@ -9,6 +9,7 @@ function LoginForm() {
     event.preventDefault();
     fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/auth/login`, {
       method: "POST",
+      mode: "cors",
       headers: {
         "content-type": "application/json",
       },
