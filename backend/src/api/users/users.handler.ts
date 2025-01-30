@@ -2,7 +2,7 @@
 import { NextFunction, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-import { default as bcrypt } from "bcryptjs";
+import { hash } from "bcryptjs";
 
 interface UsersHandler {
   getUsers(req: Request, res: Response, next: NextFunction): Promise<void>;
@@ -38,7 +38,7 @@ const usersHandler: UsersHandler = {
       });
     }
 
-    bcrypt.hash(password, 10, async (error, hashedPassword: string) => {
+    hash(password, 10, async (error, hashedPassword: string) => {
       if (error) {
         return next(error);
       } else {
