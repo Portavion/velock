@@ -1,16 +1,11 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const users_1 = __importDefault(require("./api/users"));
-const auth_1 = __importDefault(require("./api/auth"));
-const bikePoints_1 = __importDefault(require("./api/bikePoints"));
-const bikePointsLists_1 = __importDefault(require("./api/bikePointsLists"));
-const apiV1Router = (0, express_1.Router)();
-apiV1Router.use("/auth", auth_1.default);
-apiV1Router.use("/users", users_1.default);
-apiV1Router.use("/bikepoints", bikePoints_1.default);
-apiV1Router.use("/bikepointslists", bikePointsLists_1.default);
-exports.default = apiV1Router;
+import { Router } from "express";
+import userRoutes from "./api/users/index.js";
+import authRoutes from "./api/auth/index.js";
+import bikePointsRoutes from "./api/bikePoints/index.js";
+import bikePointsListsRoutes from "./api/bikePointsLists/index.js";
+const apiV1Router = Router();
+apiV1Router.use("/auth", authRoutes);
+apiV1Router.use("/users", userRoutes);
+apiV1Router.use("/bikepoints", bikePointsRoutes);
+apiV1Router.use("/bikepointslists", bikePointsListsRoutes);
+export default apiV1Router;

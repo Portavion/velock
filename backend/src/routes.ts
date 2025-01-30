@@ -1,8 +1,8 @@
 import { Router } from "express";
-import userRoutes from "./api/users";
-import authRoutes from "./api/auth";
-import bikePointsRoutes from "./api/bikePoints";
-import bikePointsListsRoutes from "./api/bikePointsLists";
+import userRoutes from "./api/users/index.js";
+import authRoutes from "./api/auth/index.js";
+import bikePointsRoutes from "./api/bikePoints/index.js";
+import bikePointsListsRoutes from "./api/bikePointsLists/index.js";
 
 const apiV1Router = Router();
 

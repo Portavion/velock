@@ -1,8 +1,8 @@
 import { Router } from "express";
 const userRoutes = Router();
 
-import usersHandler from "./users.handler";
-import { authenticate } from "../../middleware/middlewares";
+import usersHandler from "./users.handler.js";
+import { authenticate } from "../../middleware/middlewares.js";
 
 // GET
 userRoutes.get("/", authenticate, usersHandler.getUsers);

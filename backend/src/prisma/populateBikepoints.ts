@@ -1,4 +1,4 @@
-import fetchTflData from "../utils/fetchTflData";
+import fetchTflData from "../utils/fetchTflData.js";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 import { BikePoint, BikePointTfL } from "../types";

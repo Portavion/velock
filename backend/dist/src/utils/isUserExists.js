@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 async function isUserExist(userId) {
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
@@ -11,4 +9,4 @@ async function isUserExist(userId) {
         return true;
     }
 }
-exports.default = isUserExist;
+export default isUserExist;

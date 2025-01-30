@@ -1,1 +1,1 @@
-export { default } from "./bikePointsLists.routes";
+export { default } from "./bikePointsLists.routes.js";

@@ -1,22 +1,17 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const passport_jwt_1 = require("passport-jwt");
-const passport_1 = __importDefault(require("passport"));
-const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
-const helmet_1 = __importDefault(require("helmet"));
-const middlewares_1 = require("./middleware/middlewares");
-const cors = require("cors");
-const routes_1 = __importDefault(require("./routes"));
-const populateBikepoints_1 = require("./prisma/populateBikepoints");
-dotenv_1.default.config();
-passport_1.default.use(new passport_jwt_1.Strategy({
-    jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
+import express from "express";
+import dotenv from "dotenv";
+import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
+import passport from "passport";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+import helmet from "helmet";
+import { errorHandler } from "./middleware/middlewares.js";
+import cors from "cors";
+import apiV1Router from "./routes.js";
+import { updateBikePointsTable } from "./prisma/populateBikepoints.js";
+dotenv.config();
+passport.use(new JWTStrategy({
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.SECRET_KEY || "YOUR_SECRET",
 }, async (payload, done) => {
     try {
@@ -32,9 +27,9 @@ passport_1.default.use(new passport_jwt_1.Strategy({
         return done({ error }, false);
     }
 }));
-const app = (0, express_1.default)();
+const app = express();
 const port = process.env.PORT || 3000;
-app.use((0, helmet_1.default)({
+app.use(helmet({
     crossOriginEmbedderPolicy: false,
 }));
 app.use(cors({
@@ -42,11 +37,11 @@ app.use(cors({
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
-app.use(express_1.default.urlencoded({ extended: false }));
-app.use(express_1.default.json());
-setInterval(populateBikepoints_1.updateBikePointsTable, 1000 * 30);
-app.use("/api/v1/", routes_1.default);
-app.use(middlewares_1.errorHandler);
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+setInterval(updateBikePointsTable, 1000 * 30);
+app.use("/api/v1/", apiV1Router);
+app.use(errorHandler);
 app.listen(port, () => {
     console.log(`Server is live at http://localhost:${port}`);
 });

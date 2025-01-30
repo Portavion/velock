@@ -1,4 +1,4 @@
-import authHandler from "./auth.handler";
+import authHandler from "./auth.handler.js";
 import { Router } from "express";
 
 const authRoutes = Router();

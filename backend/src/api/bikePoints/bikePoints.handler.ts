@@ -1,7 +1,7 @@
 //TODO: refactor: extract business logic into services / workers
 import { NextFunction, Request, Response } from "express";
 import fetch, { Response as FetchResponse } from "node-fetch";
-import fetchTflData from "../../utils/fetchTflData";
+import fetchTflData from "../../utils/fetchTflData.js";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 

@@ -6,11 +6,11 @@ import passport from "passport";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 import helmet from "helmet";
-import { errorHandler } from "./middleware/middlewares";
-const cors = require("cors"); // Import the cors package
+import { errorHandler } from "./middleware/middlewares.js";
+import cors from "cors";
 
-import apiV1Router from "./routes";
-import { updateBikePointsTable } from "./prisma/populateBikepoints";
+import apiV1Router from "./routes.js";
+import { updateBikePointsTable } from "./prisma/populateBikepoints.js";
 
 dotenv.config();
 

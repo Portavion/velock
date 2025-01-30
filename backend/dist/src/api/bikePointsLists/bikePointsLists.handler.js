@@ -1,10 +1,5 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const bikePointsLists_db_1 = require("./bikePointsLists.db");
-const isUserExists_1 = __importDefault(require("../../utils/isUserExists"));
+import { createBikePointsList, selectAllBikePointsLists, deleteBikePointsList, updateBikePointsListName, updateBikePointsListAdd, deleteBikePoint, } from "./bikePointsLists.db.js";
+import isUserExists from "../../utils/isUserExists.js";
 const bikePointsListsHandler = {
     getAllBikePointsLists: async (req, res, next) => {
         const user = req.user;
@@ -15,7 +10,7 @@ const bikePointsListsHandler = {
         }
         const userId = Number(user.id);
         try {
-            const bikePointsLists = await (0, bikePointsLists_db_1.selectAllBikePointsLists)(userId);
+            const bikePointsLists = await selectAllBikePointsLists(userId);
             res.status(200).json(bikePointsLists);
         }
         catch (error) {
@@ -30,7 +25,7 @@ const bikePointsListsHandler = {
                 message: "Error: List creation requires a name and a user id ",
             });
         }
-        const isUserExist = await (0, isUserExists_1.default)(user?.id);
+        const isUserExist = await isUserExists(user?.id);
         if (!isUserExist) {
             res.status(404).json({
                 status: 404,
@@ -40,7 +35,7 @@ const bikePointsListsHandler = {
         }
         else {
             try {
-                const newBikePointList = await (0, bikePointsLists_db_1.createBikePointsList)(listName, user?.id);
+                const newBikePointList = await createBikePointsList(listName, user?.id);
                 res.status(200).json(newBikePointList);
             }
             catch (error) {
@@ -58,7 +53,7 @@ const bikePointsListsHandler = {
                 message: "Error: List creation requires a name and a user id ",
             });
         }
-        const isUserExist = await (0, isUserExists_1.default)(user?.id);
+        const isUserExist = await isUserExists(user?.id);
         if (!isUserExist) {
             res.status(404).json({
                 status: 404,
@@ -68,7 +63,7 @@ const bikePointsListsHandler = {
         }
         else {
             try {
-                const updatedBikePointList = await (0, bikePointsLists_db_1.updateBikePointsListName)(listId, listName, bikePointsList.length >= 1 ? bikePointsList : []);
+                const updatedBikePointList = await updateBikePointsListName(listId, listName, bikePointsList.length >= 1 ? bikePointsList : []);
                 res.status(200).json(updatedBikePointList);
             }
             catch (error) {
@@ -85,7 +80,7 @@ const bikePointsListsHandler = {
                 message: "Error: List creation requires a bike point list and a user id ",
             });
         }
-        const isUserExist = await (0, isUserExists_1.default)(user?.id);
+        const isUserExist = await isUserExists(user?.id);
         if (!isUserExist) {
             res.status(404).json({
                 status: 404,
@@ -95,7 +90,7 @@ const bikePointsListsHandler = {
         }
         else {
             try {
-                const updatedBikePointList = await (0, bikePointsLists_db_1.updateBikePointsListAdd)(listId, bikePoint);
+                const updatedBikePointList = await updateBikePointsListAdd(listId, bikePoint);
                 res.status(200).json(updatedBikePointList);
             }
             catch (error) {
@@ -111,7 +106,7 @@ const bikePointsListsHandler = {
                 message: "Error: List creation requires an id and a user id ",
             });
         }
-        const isUserExist = await (0, isUserExists_1.default)(user?.id);
+        const isUserExist = await isUserExists(user?.id);
         if (!isUserExist) {
             res.status(404).json({
                 status: 404,
@@ -121,7 +116,7 @@ const bikePointsListsHandler = {
         }
         else {
             try {
-                const deletedBikePointList = await (0, bikePointsLists_db_1.deleteBikePointsList)(listId, user?.id);
+                const deletedBikePointList = await deleteBikePointsList(listId, user?.id);
                 res.status(200).json(deletedBikePointList);
             }
             catch (error) {
@@ -138,7 +133,7 @@ const bikePointsListsHandler = {
                 message: "Error: List creation requires an id and a user id ",
             });
         }
-        const isUserExist = await (0, isUserExists_1.default)(user?.id);
+        const isUserExist = await isUserExists(user?.id);
         if (!isUserExist) {
             res.status(404).json({
                 status: 404,
@@ -148,7 +143,7 @@ const bikePointsListsHandler = {
         }
         else {
             try {
-                const deletedBikePoint = await (0, bikePointsLists_db_1.deleteBikePoint)(listId, bikePointName);
+                const deletedBikePoint = await deleteBikePoint(listId, bikePointName);
                 res.status(200).json(deletedBikePoint);
             }
             catch (error) {
@@ -157,4 +152,4 @@ const bikePointsListsHandler = {
         }
     },
 };
-exports.default = bikePointsListsHandler;
+export default bikePointsListsHandler;

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import bikePointsListsHandler from "./bikePointsLists.handler";
-import { authenticate } from "../../middleware/middlewares";
+import bikePointsListsHandler from "./bikePointsLists.handler.js";
+import { authenticate } from "../../middleware/middlewares.js";
 
 const bikePointsListsRoutes = Router();
 

@@ -1,13 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.selectAllBikePointsLists = selectAllBikePointsLists;
-exports.createBikePointsList = createBikePointsList;
-exports.deleteBikePointsList = deleteBikePointsList;
-exports.updateBikePointsListName = updateBikePointsListName;
-exports.updateBikePointsListAdd = updateBikePointsListAdd;
-exports.deleteBikePoint = deleteBikePoint;
-const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 async function selectAllBikePointsLists(userId) {
     return await prisma.bikePointList.findMany({ where: { userId: userId } });
 }
@@ -58,3 +50,4 @@ async function deleteBikePoint(listId, bikePointName) {
         return deleteResponse;
     }
 }
+export { selectAllBikePointsLists, createBikePointsList, deleteBikePointsList, updateBikePointsListName, updateBikePointsListAdd, deleteBikePoint, };

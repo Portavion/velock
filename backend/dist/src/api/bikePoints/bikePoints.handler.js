@@ -1,16 +1,11 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const node_fetch_1 = __importDefault(require("node-fetch"));
-const fetchTflData_1 = __importDefault(require("../../utils/fetchTflData"));
-const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
+import fetch from "node-fetch";
+import fetchTflData from "../../utils/fetchTflData.js";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 const bikePointsHandler = {
     getAllBikePointsData: async (_req, res, next) => {
         try {
-            const bikePointsData = await (0, fetchTflData_1.default)();
+            const bikePointsData = await fetchTflData();
             res.status(200).json(bikePointsData);
         }
         catch (error) {
@@ -40,7 +35,7 @@ const bikePointsHandler = {
         let longitude;
         const limit = 5;
         try {
-            const geocodingResponse = await (0, node_fetch_1.default)(fetchCoordUrl);
+            const geocodingResponse = await fetch(fetchCoordUrl);
             const geocodingResults = (await geocodingResponse.json());
             const bestGeocodingResult = geocodingResults[0];
             if (!bestGeocodingResult) {
@@ -71,4 +66,4 @@ LIMIT ${limit};
         }
     },
 };
-exports.default = bikePointsHandler;
+export default bikePointsHandler;

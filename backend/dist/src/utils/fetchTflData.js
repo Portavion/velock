@@ -1,13 +1,8 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const node_fetch_1 = __importDefault(require("node-fetch"));
+import fetch from "node-fetch";
 async function fetchTflData() {
     try {
         const bikePointsFetchURL = "https://api.tfl.gov.uk/BikePoint";
-        const bikeStationResponse = await (0, node_fetch_1.default)(bikePointsFetchURL);
+        const bikeStationResponse = await fetch(bikePointsFetchURL);
         const bikeStationJson = (await bikeStationResponse.json());
         return bikeStationJson;
     }
@@ -16,4 +11,4 @@ async function fetchTflData() {
         return;
     }
 }
-exports.default = fetchTflData;
+export default fetchTflData;

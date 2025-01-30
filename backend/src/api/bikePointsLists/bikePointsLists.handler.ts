@@ -8,8 +8,8 @@ import {
   updateBikePointsListName,
   updateBikePointsListAdd,
   deleteBikePoint,
-} from "./bikePointsLists.db";
-import isUserExists from "../../utils/isUserExists";
+} from "./bikePointsLists.db.js";
+import isUserExists from "../../utils/isUserExists.js";
 
 interface BikePointsListsHandler {
   getAllBikePointsLists(

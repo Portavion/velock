@@ -1,15 +1,9 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateBikePointsTable = updateBikePointsTable;
-const fetchTflData_1 = __importDefault(require("../utils/fetchTflData"));
-const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
+import fetchTflData from "../utils/fetchTflData.js";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 async function formatBikePointData() {
     try {
-        const bikePointsData = await (0, fetchTflData_1.default)();
+        const bikePointsData = await fetchTflData();
         let bikePointsDataStripped = undefined;
         if (bikePointsData) {
             bikePointsDataStripped = bikePointsData.map((bikePoint) => ({
@@ -102,3 +96,4 @@ async function updateBikePointsTable() {
         }
     }
 }
+export { updateBikePointsTable };
