@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-import * as bcrypt from "bcryptjs";
+import { hash } from "bcryptjs";
 const usersHandler = {
     getUsers: async (_req, res, next) => {
         try {
@@ -20,7 +20,7 @@ const usersHandler = {
                 message: "Error: User creation requires username password and email",
             });
         }
-        bcrypt.hash(password, 10, async (error, hashedPassword) => {
+        hash(password, 10, async (error, hashedPassword) => {
             if (error) {
                 return next(error);
             }
