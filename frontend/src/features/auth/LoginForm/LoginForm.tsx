@@ -11,7 +11,7 @@ function LoginForm() {
       method: "POST",
       mode: "cors",
       headers: {
-        "content-type": "application/json",
+        "content-type": "application/x-www-form-urlencoded",
       },
       body: JSON.stringify({ email, password }),
     })
