@@ -7,13 +7,21 @@ function LoginForm() {
 
   function submitLogin(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
+    const body =
+      encodeURIComponent("email") +
+      "=" +
+      encodeURIComponent(email) +
+      "&" +
+      encodeURIComponent("password") +
+      "=" +
+      encodeURIComponent(password);
     fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/auth/login`, {
       method: "POST",
       mode: "cors",
       headers: {
         "content-type": "application/x-www-form-urlencoded",
       },
-      body: JSON.stringify({ email, password }),
+      body: body,
     })
       .then((res) => res.json())
       .then((data) => {
