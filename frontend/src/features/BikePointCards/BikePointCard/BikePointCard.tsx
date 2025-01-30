@@ -27,8 +27,8 @@ const BikePointCard = ({
   };
 
   return (
-    <div className={styles.dockingStationContainer}>
-      <h3>{stationName}</h3>
+    <div className="bg-slate-50 w-60 p-1 color-black m-3 rounded-xl relative">
+      <h3 className="text-black text-md">{stationName}</h3>
       <button
         id={stationId}
         className={styles.delButton}

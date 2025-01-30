@@ -35,14 +35,17 @@ export function SearchResults() {
     return (
       <>
         <div>No docking stations found.</div>
-        <a href="/">Go back</a>
+
+        <a className="text-slate-600 underline" href="/">
+          Go back
+        </a>
       </>
     );
   }
 
   const bikePointResults = searchResults?.map((bikePoint) => {
     return (
-      <div key={uuidv4()}>
+      <div key={uuidv4()} className="flex justify-center">
         <BikePointResult
           stationName={bikePoint.commonName}
           stationId={bikePoint.id}
@@ -58,8 +61,9 @@ export function SearchResults() {
   return (
     <>
       {bikePointResults}
-
-      <a href="/">Go back</a>
+      <a className="text-slate-600 underline" href="/">
+        Go back
+      </a>
     </>
   );
 }

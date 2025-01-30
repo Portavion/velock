@@ -50,13 +50,13 @@ function BikePointDropdown({
   };
 
   return (
-    <div className={styles.dropdown}>
+    <div className="flex items-center justify-center h-8 mb-8">
       <select
-        className={styles.dropdownInput}
         name="BikePointListsDropdown"
         id="BikePointListsDropdown"
         value={activeListName}
         onChange={handleChange}
+        className="bg-slate-400 h-9 w-full text-center rounded-md m-1"
       >
         {bikePointLists.map((list) => (
           <option key={list.id} value={list.name}>

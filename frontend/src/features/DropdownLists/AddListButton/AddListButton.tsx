@@ -1,4 +1,3 @@
-import styles from "./AddListButton.module.css";
 import React from "react";
 
 export const AddListButton: React.FC<AddListButton> = ({
@@ -47,8 +46,15 @@ export const AddListButton: React.FC<AddListButton> = ({
   }
 
   return (
-    <button onClick={addList} type="button" className={styles.addButton}>
-      <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>
+    <button
+      onClick={addList}
+      type="button"
+      className="bg-slate-100 text-black text-center p-0 mx-1 rounded-md"
+    >
+      <span
+        className="material-symbols-outlined text-center p-0  table m-1"
+        style={{ fontSize: "18px", display: "flex" }}
+      >
         add
       </span>
     </button>

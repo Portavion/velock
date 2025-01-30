@@ -25,8 +25,8 @@ const BikePointResult = ({
 
   if (!activeListId) {
     return (
-      <div className={styles.dockingStationContainer}>
-        <h3>{stationName}</h3>
+      <div className="bg-slate-50 w-60 p-1 color-black m-3 rounded-xl relative">
+        <h3 className="text-black text-md">{stationName}</h3>
         <div className={styles.availableContainer}>
           <p className={bikeAvailable ? styles.available : styles.empty}>
             Bikes: {bikeLeft - ebikeLeft}
@@ -44,8 +44,8 @@ const BikePointResult = ({
 
   if (added) {
     return (
-      <div className={styles.dockingStationContainer}>
-        <h3>{stationName}</h3>
+      <div className="bg-slate-50 w-60 p-1 color-black m-3 rounded-xl relative">
+        <h3 className="text-black text-md">{stationName}</h3>
         <div className={styles.availableContainer}>
           <p className={bikeAvailable ? styles.available : styles.empty}>
             Bikes: {bikeLeft - ebikeLeft}
@@ -89,9 +89,9 @@ const BikePointResult = ({
   };
 
   return (
-    <div className={styles.dockingStationContainer}>
-      <h3>{stationName}</h3>
-      <div className={styles.availableContainer}>
+    <div className="bg-slate-50 w-70  h-30 p-0 color-black m-3 rounded-xl relative flex flex-col items-center justify-around">
+      <h3 className="text-black text-md ">{stationName}</h3>
+      <div className="flex flex-row justify-between flex-wrap">
         <p className={bikeAvailable ? styles.available : styles.empty}>
           Bikes: {bikeLeft - ebikeLeft}
         </p>
@@ -104,7 +104,7 @@ const BikePointResult = ({
       </div>
       <button
         id={stationId}
-        className={styles.addButton}
+        className="bg-slate-500 text-slate-100 w-10 round-md"
         onClick={handleAddToList}
       >
         Add
