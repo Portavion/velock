@@ -1,4 +1,4 @@
-import { Bike, Battery, ParkingCircle, X } from "lucide-react";
+import { Bike, Battery, BatteryMedium, ParkingCircle, X } from "lucide-react";
 
 import { removeFromList } from "../../../utils/removeFromList";
 
@@ -49,7 +49,7 @@ const BikePointCard = ({
         </div>
         <div className="flex items-center">
           {ebikeAvailable && (
-            <Battery size={16} className="mr-1 text-green-500" />
+            <BatteryMedium size={16} className="mr-1 text-green-500" />
           )}
           {!ebikeAvailable && (
             <Battery size={16} className="mr-1 text-red-500" />
