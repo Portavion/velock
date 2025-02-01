@@ -107,7 +107,9 @@ function LoginPage({
         setActiveList={setActiveList}
         token={token}
       />
-      <div className="cardsContainer">{bikePointCards}</div>
+      <div className="space-y-4 flex flex-col items-center">
+        {bikePointCards}
+      </div>
     </>
   );
 }

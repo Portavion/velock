@@ -1,4 +1,5 @@
 import React from "react";
+import { Trash2 } from "lucide-react";
 
 export const DeleteListButton: React.FC<DeleteListButton> = ({
   activeList,
@@ -45,14 +46,9 @@ export const DeleteListButton: React.FC<DeleteListButton> = ({
     <button
       onClick={deleteList}
       type="button"
-      className="bg-slate-100 text-black text-center p-0 mx-1 rounded-md"
+      className="bg-teal-800 text-teal-950 text-center p-0 mx-1 rounded-md"
     >
-      <span
-        className="material-symbols-outlined  text-center p-0  table m-1"
-        style={{ fontSize: "20px", display: "flex" }}
-      >
-        delete
-      </span>
+      <Trash2 className="w-5 h-5 rounded-md" />
     </button>
   );
 };

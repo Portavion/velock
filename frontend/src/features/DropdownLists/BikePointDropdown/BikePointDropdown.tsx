@@ -56,7 +56,7 @@ function BikePointDropdown({
         id="BikePointListsDropdown"
         value={activeListName}
         onChange={handleChange}
-        className="bg-slate-400 h-9 w-full text-center rounded-md m-1"
+        className="bg-teal-800 border-1 h-9 w-full text-center rounded-md m-1"
       >
         {bikePointLists.map((list) => (
           <option key={list.id} value={list.name}>

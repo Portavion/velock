@@ -1,4 +1,5 @@
 import React from "react";
+import { SquarePlus } from "lucide-react";
 
 export const AddListButton: React.FC<AddListButton> = ({
   bikePointLists,
@@ -49,14 +50,9 @@ export const AddListButton: React.FC<AddListButton> = ({
     <button
       onClick={addList}
       type="button"
-      className="bg-slate-100 text-black text-center p-0 mx-1 rounded-md"
+      className="bg-teal-800 text-teal-950 text-center p-0 mx-1 rounded-md"
     >
-      <span
-        className="material-symbols-outlined text-center p-0  table m-1"
-        style={{ fontSize: "18px", display: "flex" }}
-      >
-        add
-      </span>
+      <SquarePlus className="w-5 h-5 rounded-md" />
     </button>
   );
 };
