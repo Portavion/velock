@@ -50,36 +50,38 @@ function BikePointDropdown({
   };
 
   return (
-    <div className="flex items-center justify-center h-8 mb-8">
-      <select
-        name="BikePointListsDropdown"
-        id="BikePointListsDropdown"
-        value={activeListName}
-        onChange={handleChange}
-        className="bg-teal-800 border-1 h-9 w-full text-center rounded-md m-1"
-      >
-        {bikePointLists.map((list) => (
-          <option key={list.id} value={list.name}>
-            {list.name}
-          </option>
-        ))}
-      </select>
+    <div className="flex justify-center">
+      <div className="flex items-center justify-center h-8 mb-8 w-full ">
+        <select
+          name="BikePointListsDropdown"
+          id="BikePointListsDropdown"
+          value={activeListName}
+          onChange={handleChange}
+          className="bg-teal-800 border-1 h-9 text-center rounded-md m-1 w-52"
+        >
+          {bikePointLists.map((list) => (
+            <option key={list.id} value={list.name}>
+              {list.name}
+            </option>
+          ))}
+        </select>
 
-      <AddListButton
-        bikePointLists={bikePointLists}
-        setBikePointLists={setBikePointLists}
-        token={token}
-        setActiveList={setActiveList}
-      />
+        <AddListButton
+          bikePointLists={bikePointLists}
+          setBikePointLists={setBikePointLists}
+          token={token}
+          setActiveList={setActiveList}
+        />
 
-      <DeleteListButton
-        activeList={activeList}
-        setActiveList={setActiveList}
-        bikePointLists={bikePointLists}
-        setBikePointLists={setBikePointLists}
-        token={token}
-        // setActiveList={setActiveList}
-      />
+        <DeleteListButton
+          activeList={activeList}
+          setActiveList={setActiveList}
+          bikePointLists={bikePointLists}
+          setBikePointLists={setBikePointLists}
+          token={token}
+          // setActiveList={setActiveList}
+        />
+      </div>
     </div>
   );
 }
