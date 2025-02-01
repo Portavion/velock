@@ -40,7 +40,7 @@ const BikePointCard = ({
       <div className="relative mb-2">
         <button
           id={stationId}
-          onClick={() => handleDelete}
+          onClick={handleDelete}
           className="absolute -top-9 -right-3 text-teal-950 hover:text-red-900 rounded text-md list-none hover"
         >
           <X className="w-5 h-5 rounded-md" />
