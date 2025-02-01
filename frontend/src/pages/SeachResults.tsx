@@ -6,10 +6,12 @@ import { getSearchResults } from "../utils/getSearchResults.tsx";
 import { useRetrieveJWT } from "../utils/retrieveJWT";
 
 import { BikePointResult } from "../features/Searchbar/BikePointResult/BikePointResult";
+import { Loader } from "lucide-react";
 
 export function SearchResults() {
   const [searchResults, setSearchResults] = useState<BikePoint[]>();
   const [searchParams] = useSearchParams();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const token = useRetrieveJWT();
 
   let address = searchParams.get("address")?.replaceAll(" ", "+");
@@ -23,22 +25,42 @@ export function SearchResults() {
 
   useEffect(() => {
     const searchBikePoints = async (token: string, address: string) => {
-      const data = await getSearchResults(token, address);
-      if (data[0].commonName) {
-        setSearchResults(data);
+      try {
+        const data = await getSearchResults(token, address);
+        if (data[0].commonName) {
+          setSearchResults(data);
+        }
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
       }
     };
     searchBikePoints(token, address);
   }, [token, address]);
 
-  if (!searchResults) {
+  if (isLoading) {
     return (
       <>
-        <div>No docking stations found.</div>
-
-        <a className="text-slate-600 underline" href="/">
+        <div className="flex items-center justify-center h-5/6">
+          <Loader className="animate-spin w-12 h-12 text-teal-200" />
+        </div>
+        <a className="text-teal-500 underline" href="/">
           Go back
         </a>
+      </>
+    );
+  }
+
+  if (!searchResults && !isLoading) {
+    return (
+      <>
+        <div className="flex flex-col items-center justify-center h-5/6">
+          <div>No docking stations found.</div>
+          <a className="text-teal-500 underline pt-5" href="/">
+            Go back
+          </a>
+        </div>
       </>
     );
   }
@@ -61,7 +83,7 @@ export function SearchResults() {
   return (
     <>
       {bikePointResults}
-      <a className="text-slate-600 underline" href="/">
+      <a className="text-teal-500 underline" href="/">
         Go back
       </a>
     </>
