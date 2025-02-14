@@ -11,6 +11,11 @@ dotenv.config();
 
 interface AuthHandler {
   getToken(req: Request, res: Response, next: NextFunction): Promise<void>;
+  isTokenValid(
+    _req: Request,
+    res: Response,
+    _next: NextFunction,
+  ): Promise<void>;
 }
 
 const authHandler: AuthHandler = {
@@ -85,6 +90,19 @@ const authHandler: AuthHandler = {
       return;
       next(error);
     }
+  },
+  isTokenValid: async (
+    _req: Request,
+    res: Response,
+    _next: NextFunction,
+  ): Promise<void> => {
+    console.log("expiry check");
+    res.status(200).json({
+      status: 200,
+      success: true,
+      message: "login successful",
+    });
+    return;
   },
 };
 

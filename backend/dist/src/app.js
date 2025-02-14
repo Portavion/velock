@@ -43,7 +43,7 @@ app.use((_req, res, next) => {
 });
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-setInterval(updateBikePointsTable, 1000 * 30);
+setInterval(updateBikePointsTable, 1000 * 60 * 2);
 app.use("/api/v1/", apiV1Router);
 app.use(errorHandler);
 app.listen(port, () => {
