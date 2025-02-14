@@ -2,10 +2,8 @@ import dotenv from "dotenv";
 import passport from "passport";
 dotenv.config();
 const authenticate = (req, res, next) => {
-    console.log("authorisation check");
     passport.authenticate("jwt", { session: false }, (err, user) => {
         if (err) {
-            res.status(401);
             return next(err);
         }
         if (!user) {
