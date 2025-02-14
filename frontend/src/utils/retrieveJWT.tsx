@@ -19,13 +19,14 @@ function useRetrieveJWT() {
         if (isTokenValidResponse.status === 200) {
           return true;
         } else {
+          localStorage.removeItem("jwt-token");
           return false;
         }
       }
     };
     setJwtToken(localStorage.getItem("jwt-token") || "");
     if (!checkTokenExpiry()) {
-      localStorage.removeItem("jwt-token");
+      console.log("invalid token");
     }
   }, [jwtToken]);
   return jwtToken;
