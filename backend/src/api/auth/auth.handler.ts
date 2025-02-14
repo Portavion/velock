@@ -96,7 +96,6 @@ const authHandler: AuthHandler = {
     res: Response,
     _next: NextFunction,
   ): Promise<void> => {
-    console.log("expiry check");
     res.status(200).json({
       status: 200,
       success: true,
