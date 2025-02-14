@@ -59,9 +59,9 @@ function LoginPage({
     fetchBikePoints();
   }, [token, activeList]);
 
-  if (!activeList) {
-    return <></>;
-  }
+  // if (!activeList) {
+  //   return <></>;
+  // }
 
   const bikePointCards = bikePoints?.map((bikePoint) => {
     return (
@@ -70,7 +70,7 @@ function LoginPage({
           token={token}
           stationName={bikePoint.commonName}
           stationId={bikePoint.id}
-          list={activeList.id}
+          list={activeList?.id || 0}
           bikeLeft={bikePoint.NbBikes}
           ebikeLeft={bikePoint.NbEbikes}
           spaceLeft={bikePoint.NbEmptyDocks}

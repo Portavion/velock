@@ -41,6 +41,7 @@ function BikePointDropdown({
       </>
     );
   }
+
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setActiveListName(e.target.value);
     const updatedActiveList = bikePointLists?.filter(
