@@ -20,6 +20,7 @@ function useRetrieveJWT() {
           return true;
         } else {
           localStorage.removeItem("jwt-token");
+          window.location.reload();
           return false;
         }
       }
