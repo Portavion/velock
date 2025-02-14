@@ -69,7 +69,7 @@ app.use((_req, res, next) => {
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-setInterval(updateBikePointsTable, 1000 * 60 * 60); // updates every hour: 1000ms * 60s * 5
+setInterval(updateBikePointsTable, 1000 * 60 * 2); // updates every 2 min: 1000ms * 60s * 2
 
 app.use("/api/v1/", apiV1Router);
 app.use(errorHandler);
