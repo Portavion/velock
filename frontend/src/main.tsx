@@ -10,6 +10,10 @@ import { SearchResults } from "./pages/SeachResults";
 
 const router = createBrowserRouter([
   {
+    path: "/:activeListId",
+    element: <App />,
+  },
+  {
     path: "/",
     element: <App />,
   },

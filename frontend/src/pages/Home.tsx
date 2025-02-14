@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router";
 
 import { loadBikePointLists } from "../utils/loadBikePointLists";
 import { loadBikePoints } from "../utils/loadBikePoints";
@@ -23,8 +24,10 @@ function LoginPage({
   const [bikePointLists, setBikePointLists] = useState<
     BikePointList[] | undefined
   >();
+  const [searchParams] = useSearchParams();
   const [bikePoints, setBikePoints] = useState<BikePoint[]>();
   const token = useRetrieveJWT();
+  const activeListId = Number(searchParams.get("activeListId"));
 
   const [address, setAddress] = useState("");
   const navigate = useNavigate();
@@ -40,9 +43,18 @@ function LoginPage({
     const fetchList = async () => {
       if (token) {
         const data = await loadBikePointLists(token);
+
         setBikePointLists(data);
         if (data && !activeList) {
-          setActiveList(data[0]);
+          if (data && activeListId) {
+            const matchingActiveList = data.filter(
+              (list) => list.id === activeListId,
+            );
+            setActiveList(matchingActiveList[0]);
+            console.log(activeList);
+          } else {
+            setActiveList(data[0]);
+          }
         }
       }
     };

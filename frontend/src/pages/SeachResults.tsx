@@ -45,7 +45,10 @@ export function SearchResults() {
         <div className="flex items-center justify-center h-5/6">
           <Loader className="animate-spin w-12 h-12 text-teal-200" />
         </div>
-        <a className="text-teal-500 underline" href="/">
+        <a
+          className="text-teal-500 underline"
+          href={`/?activeListId=${activeListId}`}
+        >
           Go back
         </a>
       </>
@@ -57,7 +60,10 @@ export function SearchResults() {
       <>
         <div className="flex flex-col items-center justify-center h-5/6">
           <div>No docking stations found.</div>
-          <a className="text-teal-500 underline pt-5" href="/">
+          <a
+            className="text-teal-500 underline"
+            href={`/?activeListId=${activeListId}`}
+          >
             Go back
           </a>
         </div>
@@ -82,10 +88,13 @@ export function SearchResults() {
 
   return (
     <>
-      {bikePointResults}
-      <a className="text-teal-500 underline" href="/">
+      <a
+        className="text-teal-500 underline"
+        href={`/?activeListId=${activeListId}`}
+      >
         Go back
       </a>
+      {bikePointResults}
     </>
   );
 }
