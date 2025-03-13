@@ -1,5 +1,5 @@
 <div align="center">
-<img src="./src/assets/velock-logo.png" width="90" alt="Logo" />
+<img src="./frontend/src/assets/velock-logo.png" width="90" alt="Logo" />
 
 <h2> Project Name : Velock </h2>
 
