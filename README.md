@@ -11,12 +11,9 @@
 ![](https://img.shields.io/badge/Nodejs-6200EE?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![](https://img.shields.io/badge/Express-6200EE?style=for-the-badge&logo=expressjs&logoColor=white)
 
-<img src="./assets/Velock-demo.gif" width="" alt="Logo" />
 </div>
 
 ## 💡 Overview
-
-<!--TODO: video demonstration-->
 
 Velock is a web application designed to simplify looking up availability data
 for Santander Bikes. Leveraging the TfL Open API, Velock provides
@@ -26,6 +23,9 @@ access. Additionally, Velock offers powerful search functionality, allowing
 users to locate specific stations or discover nearby docking options based on an
 address. Key features include:
 
+<div align="center">
+<img src="./assets/Velock-demo.gif" height="540" alt="Logo" />
+</div>
 ## ✨ Features
 
 - 🚲 Real-Time Bike & Dock Availability: Get up-to-the-minute data from the TfL
