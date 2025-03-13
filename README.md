@@ -17,63 +17,54 @@
 
 <!--TODO: video demonstration-->
 
-Chalkr is a local-first climbing workout tracker built using React Native and
-SQLite. It aims to help climber analyse their workouts and get insightful data
-about their training and progress. Chalkr focuses on efficiency and
-user-friendliness, allowing user to create, view and update routes. Key features
-include:
+Velock is a web application designed to simplify looking up availability data
+for Santander Bikes. Leveraging the TfL Open API, Velock provides
+up-to-the-minute availability data for bikes and docking stations across the
+city. Users can create personalised lists of frequently used stations for quick
+access. Additionally, Velock offers powerful search functionality, allowing
+users to locate specific stations or discover nearby docking options based on an
+address. Key features include:
 
 ## ✨ Features
 
-- 🧗 Log Routes: Record ascents with details like grade, style, etc.
-- 🏋️ Record & Manage workouts: Log your climbing sessions.
-- 📸 Route Documentation: Attach photos to your route logs.
-- 📱 Local-First: Log your workouts on the go whether in your local gym or deep
-  down your favourite crag.
-- 📅 Workout History & Review: Access and review your past workouts and analyze
-  your performance.
-- 📊 Grade & Style Analysis: Analyze your completed routes and identify
-  strengths and weaknesses.
-- 📈 Analytics & Visualizations: Gain valuable insights into your climbing with
-  statistics and charts.
-- 🔐Google Sign-In Integration: Secure and streamlined user authentication.
+- 🚲 Real-Time Bike & Dock Availability: Get up-to-the-minute data from the TfL
+  Open API.
+- 📍 Personalized Station Lists: Create and manage custom lists of favorite
+  docking stations for quick access.
+- 🔍 Powerful Station Search: Find specific docking stations by name or
+  location.
+- 🗺️ Location-Based Nearby Station Retrieval: Retrieve lists of docking stations
+  closest to a specified address.
+- ⚡️ Fast Data Retrieval: Designed for efficient and rapid access to bike and
+  docking station information.
+- 📱 Mobile-First Design: Optimized for seamless use on mobile devices.
 
 ## 💻 Tech Stack
 
-- React Native: A framework for building native mobile applications using React.
-- Expo: A framework for universal React Native apps.
-- Firebase: A mobile and web development platform, providing authentication.
-- SQLite: A self-contained SQL database engine.
-- Drizzle ORM: A TypeScript ORM providing type-safe database access.
-- NativeWind: Tailwind CSS for React Native.
-- Jest: A JavaScript testing framework.
-- React Native Testing Library: A testing utility for React Native components.
+- TypeScript: A strongly typed programming language that builds on JavaScript.
+- React: A JavaScript library for building user interfaces.
+- Node.js: A JavaScript runtime environment for server-side development.
+- Express.js: A fast, unopinionated, minimalist web framework for Node.js.
+- PostgreSQL: A powerful, open-source relational database system.
+- Prisma ORM: A next-generation Node.js and TypeScript ORM.
+- bcrypt: A library for hashing passwords.
+- JWT (JSON Web Tokens): For secure authentication.
+- Passport.js: Authentication middleware for Node.js.
+- Tailwind CSS: A utility-first CSS framework.
 
 ## 📦 Getting Started
 
 To get a local copy of this project up and running, follow these steps.
-
-### 🚀 Prerequisites
-
-- **Node.js** (v16.x or higher) and **npm** or **yarn**.
-- **Npm**: If you prefer using npm for package management and running scripts.
-- **macOS:** iOS development requires a macOS environment.
-- **Xcode:** Download and install Xcode from the Mac App Store. Xcode is Apple's
-  integrated development environment (IDE) for iOS development.
-- **Xcode Command Line Tools:** Ensure Xcode Command Line Tools are installed.
-  You can install these by opening Xcode and navigating to
-  `Xcode > Preferences > Locations` or by running `xcode-select --install` in
-  your terminal.
 
 ### 🛠️ Installation
 
 1. **Clone the repository:**
 
    ```bash
-   git clone git@github.com:Portavion/Chalkr.git
+   git clone git@github.com:Portavion/velock.git
    ```
 
-2. **Install dependencies:**
+2. **Install dependencies for frontend and backend:**
 
    Using Npm:
 
@@ -81,21 +72,37 @@ To get a local copy of this project up and running, follow these steps.
    npm install
    ```
 
+   Install the postGIS extension for PostgreSQL. This is used for identifying
+   the closest docking stations near an address.
+
 3. **Set up environment variables:**
 
-   The Expo CLI will automatically load environment variables with an
-   EXPO*PUBLIC* prefix from .env files for use within your JavaScript code
-   whenever you use the Expo CLI, such as when running npx expo start to start
-   your app in local development mode.
+   3.1 Frontend
 
-   ```bash
-   npx expo start
+   ```js
+   VITE_BASE_URL = "http://localhost:3000";
+   ```
+
+   3.2 Backend
+
+   ```js
+   DATABASE_URL = "your_postgre_db_url";
+   SECRET_KEY = "your_secret_key_for_bcrypt";
+   REFRESH_RATE = your_tfl_bike_point_refresh_rate;
    ```
 
 4. **Start the development server:**
 
-   The app is currently only developed and tested for iOs.
+   Run prisma migration to setup the database.
+
+   Backend server can be started with:
 
    ```bash
-   npx expo run:ios --device
+   npm run start
+   ```
+
+   Frontend server can be started with:
+
+   ```bash
+   npm run dev
    ```
