@@ -26,6 +26,7 @@ address. Key features include:
 <div align="center">
 <img src="./assets/Velock-demo.gif" height="540" alt="Logo" />
 </div>
+
 ## ✨ Features
 
 - 🚲 Real-Time Bike & Dock Availability: Get up-to-the-minute data from the TfL
