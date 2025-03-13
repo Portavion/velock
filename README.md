@@ -11,6 +11,7 @@
 ![](https://img.shields.io/badge/Nodejs-6200EE?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![](https://img.shields.io/badge/Express-6200EE?style=for-the-badge&logo=expressjs&logoColor=white)
 
+<img src="./assets/Velock-demo.gif" width="" alt="Logo" />
 </div>
 
 ## 💡 Overview
