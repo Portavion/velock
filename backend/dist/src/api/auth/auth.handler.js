@@ -53,7 +53,6 @@ const authHandler = {
         }
     },
     isTokenValid: async (_req, res, _next) => {
-        console.log("expiry check");
         res.status(200).json({
             status: 200,
             success: true,
