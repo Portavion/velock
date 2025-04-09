@@ -9,29 +9,33 @@ import {
 
 import { removeFromList } from "../../../utils/removeFromList";
 
-const BikePointCard = ({
-  stationName,
-  bikeLeft,
-  spaceLeft,
-  ebikeLeft,
-  stationId,
-  list,
-  token,
-}: {
-  stationName: string;
-  bikeLeft: number;
-  spaceLeft: number;
-  ebikeLeft: number;
+interface BikePointCardProps {
   stationId: string;
   list: number;
   token: string;
-}) => {
-  const bikeAvailable = bikeLeft > 0 ? true : false;
-  const spaceAvailable = spaceLeft > 0 ? true : false;
-  const ebikeAvailable = ebikeLeft > 0 ? true : false;
+  bikePoints: BikePoint[];
+  setBikePoints: React.Dispatch<React.SetStateAction<BikePoint[] | undefined>>;
+}
+
+const BikePointCard = ({
+  stationId,
+  list,
+  token,
+  bikePoints,
+  setBikePoints,
+}: BikePointCardProps) => {
+  const stationIndex = bikePoints.findIndex(
+    (bikePoint) => bikePoint.id === stationId,
+  );
+  const stationName = bikePoints[stationIndex].commonName;
+  const bikePoint = bikePoints[stationIndex];
+  const bikeAvailable = bikePoint.NbBikes > 0 ? true : false;
+  const spaceAvailable = bikePoint.NbEmptyDocks > 0 ? true : false;
+  const ebikeAvailable = bikePoint.NbEbikes > 0 ? true : false;
 
   const handleDelete = async () => {
     removeFromList(token, list, stationId);
+    setBikePoints(bikePoints.filter((bikePoint) => bikePoint.id !== stationId));
   };
 
   return (
@@ -51,7 +55,7 @@ const BikePointCard = ({
           {bikeAvailable && <Bike size={16} className="mr-1 text-green-500" />}
           {!bikeAvailable && <Bike size={16} className="mr-1 text-red-500" />}
           <span>
-            {bikeLeft} {bikeLeft > 1 ? "bikes" : "bike"}
+            {bikePoint.NbBikes} {bikePoint.NbBikes > 1 ? "bikes" : "bike"}
           </span>
         </div>
         <div className="flex items-center">
@@ -62,7 +66,7 @@ const BikePointCard = ({
             <Battery size={16} className="mr-1 text-red-500" />
           )}
           <span>
-            {ebikeLeft} {ebikeLeft > 1 ? "e-bikes" : "e-bike"}
+            {bikePoint.NbEbikes} {bikePoint.NbEbikes > 1 ? "e-bikes" : "e-bike"}
           </span>
         </div>
         <div className="flex items-center">
@@ -73,37 +77,12 @@ const BikePointCard = ({
             <ParkingSquareOff size={16} className="mr-1 text-red-500" />
           )}
           <span>
-            {spaceLeft} {spaceLeft > 1 ? "spaces" : "space"}
+            {bikePoint.NbEmptyDocks}{" "}
+            {bikePoint.NbEmptyDocks > 1 ? "spaces" : "space"}
           </span>
         </div>
       </div>
     </li>
-    // <div className="bg-slate-50 w-60 p-1 color-black m-3 rounded-xl relative">
-    //   <h3 className="text-black text-md">{stationName}</h3>
-    //   <button
-    //     id={stationId}
-    //     className={styles.delButton}
-    //     onClick={handleDelete}
-    //   >
-    //     <span
-    //       className="material-symbols-outlined"
-    //       style={{ fontSize: "12px" }}
-    //     >
-    //       close
-    //     </span>
-    //   </button>
-    //   <div className={styles.availableContainer}>
-    //     <p className={bikeAvailable ? styles.available : styles.empty}>
-    //       Bikes: {bikeLeft - ebikeLeft}
-    //     </p>
-    //     <p className={ebikeAvailable ? styles.available : styles.empty}>
-    //       E-bikes: {ebikeLeft}
-    //     </p>
-    //   </div>
-    //   <p className={spaceAvailable ? styles.available : styles.empty}>
-    //     Empty spaces: {spaceLeft}
-    //   </p>
-    // </div>
   );
 };
 

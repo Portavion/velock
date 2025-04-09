@@ -24,7 +24,6 @@ async function removeFromList(
         body: body,
       },
     );
-    window.location.reload();
   } catch (error) {
     console.log(error);
   }

@@ -71,21 +71,16 @@ function LoginPage({
     fetchBikePoints();
   }, [token, activeList]);
 
-  // if (!activeList) {
-  //   return <></>;
-  // }
-
+  //TODO: refactor token in context provider
   const bikePointCards = bikePoints?.map((bikePoint) => {
     return (
       <div key={uuidv4()}>
         <BikePointCard
           token={token}
-          stationName={bikePoint.commonName}
           stationId={bikePoint.id}
           list={activeList?.id || 0}
-          bikeLeft={bikePoint.NbBikes}
-          ebikeLeft={bikePoint.NbEbikes}
-          spaceLeft={bikePoint.NbEmptyDocks}
+          bikePoints={bikePoints}
+          setBikePoints={setBikePoints}
         ></BikePointCard>
       </div>
     );
