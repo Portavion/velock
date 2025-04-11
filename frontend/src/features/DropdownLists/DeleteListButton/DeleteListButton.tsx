@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Trash2 } from "lucide-react";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 export const DeleteListButton: React.FC<DeleteListButton> = ({
   activeList,
   bikePointLists,
   setBikePointLists,
   setActiveList,
-  token,
 }) => {
+  const token = useContext(AuthContext);
   async function deleteList(): Promise<void> {
     const listToDeleteName = activeList?.name;
     if (activeList) {

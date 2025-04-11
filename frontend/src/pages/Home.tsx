@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router";
 
 import { loadBikePointLists } from "../utils/loadBikePointLists";
 import { loadBikePoints } from "../utils/loadBikePoints";
-import { useRetrieveJWT } from "../utils/retrieveJWT";
 import { v4 as uuidv4 } from "uuid";
 
 import { Search } from "lucide-react";
 
 import { BikePointCard } from "../features/BikePointCards/BikePointCard/BikePointCard";
 import { BikePointDropdown } from "../features/DropdownLists";
+import { AuthContext } from "../contexts/AuthContext";
 
 function LoginPage({
   activeList,
@@ -26,7 +26,7 @@ function LoginPage({
   >();
   const [searchParams] = useSearchParams();
   const [bikePoints, setBikePoints] = useState<BikePoint[]>();
-  const token = useRetrieveJWT();
+  const token = useContext(AuthContext);
   const activeListId = Number(searchParams.get("activeListId"));
 
   const [address, setAddress] = useState("");
@@ -76,7 +76,6 @@ function LoginPage({
     return (
       <div key={uuidv4()}>
         <BikePointCard
-          token={token}
           stationId={bikePoint.id}
           list={activeList?.id || 0}
           bikePoints={bikePoints}
@@ -112,7 +111,6 @@ function LoginPage({
         setBikePointLists={setBikePointLists}
         activeList={activeList}
         setActiveList={setActiveList}
-        token={token}
       />
       <div className="space-y-4 flex flex-col items-center">
         {bikePointCards}

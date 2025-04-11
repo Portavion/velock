@@ -3,8 +3,6 @@ async function addToList(
   listId: number,
   bikePointId: string,
 ): Promise<string[]> {
-  // const body = { token: token, listId: listId, bikePointToAdd: bikePointId };
-
   const formBody =
     encodeURIComponent("listId") +
     "=" +
@@ -13,9 +11,6 @@ async function addToList(
     encodeURIComponent("bikePoint") +
     "=" +
     encodeURIComponent(bikePointId);
-  // const formBody = Object.keys(body)
-  //   .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(body[key]))
-  //   .join("&");
 
   try {
     const bikePointResponse = await fetch(

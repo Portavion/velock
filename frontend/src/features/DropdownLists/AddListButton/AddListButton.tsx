@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { SquarePlus } from "lucide-react";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 export const AddListButton: React.FC<AddListButton> = ({
   bikePointLists,
   setBikePointLists,
   setActiveList,
-  token,
 }) => {
+  const token = useContext(AuthContext);
   async function addList() {
     const newListName = prompt("Please enter the name of your list:");
     if (newListName) {

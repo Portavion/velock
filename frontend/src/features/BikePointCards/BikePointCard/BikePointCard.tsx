@@ -8,11 +8,12 @@ import {
 } from "lucide-react";
 
 import { removeFromList } from "../../../utils/removeFromList";
+import { useContext } from "react";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 interface BikePointCardProps {
   stationId: string;
   list: number;
-  token: string;
   bikePoints: BikePoint[];
   setBikePoints: React.Dispatch<React.SetStateAction<BikePoint[] | undefined>>;
 }
@@ -20,7 +21,6 @@ interface BikePointCardProps {
 const BikePointCard = ({
   stationId,
   list,
-  token,
   bikePoints,
   setBikePoints,
 }: BikePointCardProps) => {
@@ -32,6 +32,7 @@ const BikePointCard = ({
   const bikeAvailable = bikePoint.NbBikes > 0 ? true : false;
   const spaceAvailable = bikePoint.NbEmptyDocks > 0 ? true : false;
   const ebikeAvailable = bikePoint.NbEbikes > 0 ? true : false;
+  const token = useContext(AuthContext);
 
   const handleDelete = async () => {
     removeFromList(token, list, stationId);

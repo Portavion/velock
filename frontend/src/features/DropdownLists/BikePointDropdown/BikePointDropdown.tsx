@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./BikePointDropdown.module.css";
 import { AddListButton } from "../AddListButton/AddListButton";
 import { DeleteListButton } from "../DeleteListButton/DeleteListButton";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 function BikePointDropdown({
   bikePointLists,
   setBikePointLists,
   activeList,
   setActiveList,
-  token,
 }: {
   bikePointLists: BikePointList[] | undefined;
   setBikePointLists: React.Dispatch<
@@ -18,9 +18,9 @@ function BikePointDropdown({
   setActiveList: React.Dispatch<
     React.SetStateAction<BikePointList | undefined>
   >;
-  token: string;
 }) {
   const [activeListName, setActiveListName] = useState("");
+  const token = useContext(AuthContext);
 
   useEffect(() => {
     if (!activeList) {
