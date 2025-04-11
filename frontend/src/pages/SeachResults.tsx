@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import { v4 as uuidv4 } from "uuid";
 
@@ -6,13 +6,14 @@ import { getSearchResults } from "../utils/getSearchResults.tsx";
 
 import { BikePointResult } from "../features/Searchbar/BikePointResult/BikePointResult";
 import { Loader } from "lucide-react";
-import { AuthContext } from "../contexts/AuthContext.ts";
+import { useRetrieveJWT } from "../utils/retrieveJWT.tsx";
 
+//TODO: refactor auth context provider
 export function SearchResults() {
   const [searchResults, setSearchResults] = useState<BikePoint[]>();
   const [searchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const token = useContext(AuthContext);
+  const token = useRetrieveJWT();
 
   let address = searchParams.get("address")?.replaceAll(" ", "+");
   const activeListId = searchParams.get("activelist")
