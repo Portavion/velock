@@ -2,6 +2,15 @@ import { useState } from "react";
 import { useRetrieveJWT } from "../../../utils/retrieveJWT";
 import styles from "./BikePointResult.module.css";
 
+interface BikePointResultsProps {
+  stationName: string;
+  stationId: string;
+  bikeLeft: number;
+  spaceLeft: number;
+  ebikeLeft: number;
+  activeListId: number | null;
+}
+
 const BikePointResult = ({
   stationName,
   stationId,
@@ -9,14 +18,7 @@ const BikePointResult = ({
   spaceLeft,
   ebikeLeft,
   activeListId,
-}: {
-  stationName: string;
-  stationId: string;
-  bikeLeft: number;
-  spaceLeft: number;
-  ebikeLeft: number;
-  activeListId: number | null;
-}) => {
+}: BikePointResultsProps) => {
   const bikeAvailable = bikeLeft > 0 ? true : false;
   const spaceAvailable = spaceLeft > 0 ? true : false;
   const ebikeAvailable = ebikeLeft > 0 ? true : false;

@@ -12,15 +12,14 @@ import { BikePointCard } from "../features/BikePointCards/BikePointCard/BikePoin
 import { BikePointDropdown } from "../features/DropdownLists";
 import { AuthContext } from "../contexts/AuthContext";
 
-function LoginPage({
-  activeList,
-  setActiveList,
-}: {
+interface LoginPageProps {
   activeList: BikePointList | undefined;
   setActiveList: React.Dispatch<
     React.SetStateAction<BikePointList | undefined>
   >;
-}) {
+}
+
+function LoginPage({ activeList, setActiveList }: LoginPageProps) {
   const [bikePointLists, setBikePointLists] = useState<
     BikePointList[] | undefined
   >();
@@ -71,7 +70,6 @@ function LoginPage({
     fetchBikePoints();
   }, [token, activeList]);
 
-  //TODO: refactor token in context provider
   const bikePointCards = bikePoints?.map((bikePoint) => {
     return (
       <div key={uuidv4()}>

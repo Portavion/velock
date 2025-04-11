@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 
 import { Input } from "../../../components/Input";
 
-function Searchbar({ activeListId }: { activeListId: number }) {
+interface SearchBarProps {
+  activeListId: number;
+}
+
+function Searchbar({ activeListId }: SearchBarProps) {
   const [address, setAddress] = useState("");
   const navigate = useNavigate();
 
