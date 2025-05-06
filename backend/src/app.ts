@@ -13,7 +13,8 @@ import apiV1Router from "./routes.js";
 import { updateBikePointsTable } from "./prisma/populateBikepoints.js";
 
 dotenv.config();
-const UPDATE_FREQ_IN_MS = 1000 * 60 * 1; // updates every minute
+// const UPDATE_FREQ_IN_MS = 1000 * 60 * 1; // updates every minute
+let UPDATE_FREQ_IN_MS = Number(process.env.UPDATE_FREQ) || 1000 * 60 * 5;
 // const UPDATE_FREQ_IN_MS = 1000 * 60 * 0.25; // updates every minute
 
 passport.use(
