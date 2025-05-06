@@ -26,21 +26,6 @@ async function formatBikePointData() {
         return;
     }
 }
-async function checkBikePoint(bikePointId) {
-    let bikePoint = null;
-    try {
-        bikePoint = await prisma.bikePoint.findUnique({
-            where: {
-                id: bikePointId,
-            },
-        });
-    }
-    catch (error) {
-        console.log(error);
-        return false;
-    }
-    return bikePoint ? true : false;
-}
 async function createBikePoint(bikePoint) {
     try {
         await prisma.bikePoint.create({
@@ -94,16 +79,7 @@ async function updateBikePointsTable() {
     }
     else {
         for (let bikePoint of data) {
-            let isExisting;
             try {
-                isExisting = await checkBikePoint(bikePoint.id);
-                if (!isExisting) {
-                    console.log(`${Date.now()}: §Bikepoint ${bikePoint.id} existing: ${isExisting}`);
-                }
-                if (!isExisting) {
-                    const res = await createBikePoint(bikePoint);
-                    console.log(`${Date.now()}: Created bikePoint: ${res}`);
-                }
                 await prisma.bikePoint.update({
                     where: { id: bikePoint.id },
                     data: {
@@ -121,8 +97,10 @@ async function updateBikePointsTable() {
                 });
             }
             catch (error) {
-                console.log(`${Date.now()}Error at bikePoint: ${bikePoint.id} exist? ${isExisting}`);
+                console.log(`${Date.now()}Error at bikePoint: ${bikePoint.id}`);
                 console.log(error);
+                const res = await createBikePoint(bikePoint);
+                console.log(`${Date.now()}: Created bikePoint: ${res}`);
             }
         }
         console.log(`${Date.now()} Bikepoint table updated`);

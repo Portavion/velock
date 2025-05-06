@@ -52,22 +52,6 @@ async function formatBikePointData(): Promise<BikePoint[] | undefined> {
   }
 }
 
-async function checkBikePoint(bikePointId: string): Promise<Boolean> {
-  let bikePoint = null;
-  try {
-    bikePoint = await prisma.bikePoint.findUnique({
-      where: {
-        id: bikePointId,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
-
-  return bikePoint ? true : false;
-}
-
 async function createBikePoint(bikePoint: BikePoint): Promise<Boolean> {
   try {
     await prisma.bikePoint.create({
@@ -121,20 +105,7 @@ async function updateBikePointsTable(): Promise<void> {
     console.log(data);
   } else {
     for (let bikePoint of data) {
-      let isExisting;
       try {
-        isExisting = await checkBikePoint(bikePoint.id);
-        if (!isExisting) {
-          console.log(
-            `${Date.now()}: §Bikepoint ${bikePoint.id} existing: ${isExisting}`,
-          );
-        }
-
-        if (!isExisting) {
-          const res = await createBikePoint(bikePoint);
-          console.log(`${Date.now()}: Created bikePoint: ${res}`);
-        }
-
         await prisma.bikePoint.update({
           where: { id: bikePoint.id },
           data: {
@@ -151,10 +122,10 @@ async function updateBikePointsTable(): Promise<void> {
           },
         });
       } catch (error) {
-        console.log(
-          `${Date.now()}Error at bikePoint: ${bikePoint.id} exist? ${isExisting}`,
-        );
+        console.log(`${Date.now()}Error at bikePoint: ${bikePoint.id}`);
         console.log(error);
+        const res = await createBikePoint(bikePoint);
+        console.log(`${Date.now()}: Created bikePoint: ${res}`);
       }
     }
     console.log(`${Date.now()} Bikepoint table updated`);
