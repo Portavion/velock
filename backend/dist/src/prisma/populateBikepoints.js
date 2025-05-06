@@ -93,8 +93,9 @@ async function updateBikePointsTable() {
     }
     else {
         for (let bikePoint of data) {
+            let isExisting;
             try {
-                const isExisting = await checkBikePoint(bikePoint.id);
+                isExisting = await checkBikePoint(bikePoint.id);
                 if (!isExisting) {
                     console.log(`Bikepoint ${bikePoint.id} existing: ${isExisting}`);
                 }
@@ -120,7 +121,7 @@ async function updateBikePointsTable() {
             }
             catch (error) {
                 console.log(error);
-                console.log(`Error at bikePoint: ${bikePoint.id}`);
+                console.log(`Error at bikePoint: ${bikePoint.id} exist? ${isExisting}`);
             }
         }
         console.log("Bikepoint table updated");
