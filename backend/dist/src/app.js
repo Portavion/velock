@@ -10,6 +10,7 @@ import cors from "cors";
 import apiV1Router from "./routes.js";
 import { updateBikePointsTable } from "./prisma/populateBikepoints.js";
 dotenv.config();
+const UPDATE_FREQ_IN_MS = 1000 * 60 * 1;
 passport.use(new JWTStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.SECRET_KEY || "YOUR_SECRET",
@@ -43,7 +44,7 @@ app.use((_req, res, next) => {
 });
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-setInterval(updateBikePointsTable, 1000 * 60 * 5);
+setInterval(updateBikePointsTable, UPDATE_FREQ_IN_MS);
 app.use("/api/v1/", apiV1Router);
 app.use(errorHandler);
 app.listen(port, () => {

@@ -13,6 +13,8 @@ import apiV1Router from "./routes.js";
 import { updateBikePointsTable } from "./prisma/populateBikepoints.js";
 
 dotenv.config();
+const UPDATE_FREQ_IN_MS = 1000 * 60 * 1; // updates every minute
+// const UPDATE_FREQ_IN_MS = 1000 * 60 * 0.25; // updates every minute
 
 passport.use(
   new JWTStrategy(
@@ -69,7 +71,7 @@ app.use((_req, res, next) => {
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-setInterval(updateBikePointsTable, 1000 * 60 * 5); // updates every 5 min: 1000ms * 60s * 2
+setInterval(updateBikePointsTable, UPDATE_FREQ_IN_MS); // updates every 5 min: 1000ms * 60s * 2
 
 app.use("/api/v1/", apiV1Router);
 app.use(errorHandler);

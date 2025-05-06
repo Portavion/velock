@@ -26,33 +26,54 @@ async function formatBikePointData() {
         return;
     }
 }
+async function checkBikePoint(bikePointId) {
+    let bikePoint = null;
+    try {
+        bikePoint = await prisma.bikePoint.findUnique({
+            where: {
+                id: bikePointId,
+            },
+        });
+    }
+    catch (error) {
+        console.log(error);
+        return false;
+    }
+    return bikePoint ? true : false;
+}
+async function createBikePoint(bikePoint) {
+    try {
+        await prisma.bikePoint.create({
+            data: {
+                id: bikePoint.id,
+                commonName: bikePoint.commonName,
+                locked: bikePoint.locked,
+                NbBikes: bikePoint.NbBikes,
+                NbEmptyDocks: bikePoint.NbEmptyDocks,
+                NbDocks: bikePoint.NbDocks,
+                NbStandardBikes: bikePoint.NbStandardBikes,
+                NbEbikes: bikePoint.NbEBikes,
+                lat: bikePoint.lat,
+                lon: bikePoint.lon,
+            },
+        });
+        console.log(`Created bikePoint ${bikePoint.id}`);
+    }
+    catch (error) {
+        console.log(error);
+        return false;
+    }
+    return true;
+}
 async function populateBikePointsTable() {
     const data = await formatBikePointData();
     if (data) {
         for (let bikePoint of data) {
-            try {
-                await prisma.bikePoint.create({
-                    data: {
-                        id: bikePoint.id,
-                        commonName: bikePoint.commonName,
-                        locked: bikePoint.locked,
-                        NbBikes: bikePoint.NbBikes,
-                        NbEmptyDocks: bikePoint.NbEmptyDocks,
-                        NbDocks: bikePoint.NbDocks,
-                        NbStandardBikes: bikePoint.NbStandardBikes,
-                        NbEbikes: bikePoint.NbEBikes,
-                        lat: bikePoint.lat,
-                        lon: bikePoint.lon,
-                    },
-                });
-            }
-            catch (error) {
-                console.log(error);
-            }
+            createBikePoint(bikePoint);
         }
     }
     else {
-        console.log("something went wrong when populating BikePoint table");
+        console.log("Failed to populate bikePoint table");
     }
 }
 async function updateBikePointsTable() {
@@ -73,6 +94,14 @@ async function updateBikePointsTable() {
     else {
         for (let bikePoint of data) {
             try {
+                const isExisting = await checkBikePoint(bikePoint.id);
+                if (!isExisting) {
+                    console.log(`Bikepoint ${bikePoint.id} existing: ${isExisting}`);
+                }
+                if (!isExisting) {
+                    const res = await createBikePoint(bikePoint);
+                    console.log(`Created bikePoint: ${res}`);
+                }
                 await prisma.bikePoint.update({
                     where: { id: bikePoint.id },
                     data: {
@@ -94,6 +123,7 @@ async function updateBikePointsTable() {
                 console.log(`Error at bikePoint: ${bikePoint.id}`);
             }
         }
+        console.log("Bikepoint table updated");
     }
 }
 export { updateBikePointsTable };
