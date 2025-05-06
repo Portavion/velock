@@ -57,10 +57,10 @@ async function createBikePoint(bikePoint) {
                 lon: bikePoint.lon,
             },
         });
-        console.log(`Created bikePoint ${bikePoint.id}`);
+        console.log(`${Date.now()}: Created bikePoint ${bikePoint.id}`);
     }
     catch (error) {
-        console.log(error);
+        console.log(`${Date.now()}: Error creating bikePoint: ${error}`);
         return false;
     }
     return true;
@@ -71,9 +71,10 @@ async function populateBikePointsTable() {
         for (let bikePoint of data) {
             createBikePoint(bikePoint);
         }
+        console.log(`${Date.now()} BikePoint Table populated`);
     }
     else {
-        console.log("Failed to populate bikePoint table");
+        console.log("No data for populating BikePoint Table");
     }
 }
 async function updateBikePointsTable() {
@@ -84,11 +85,11 @@ async function updateBikePointsTable() {
             await populateBikePointsTable();
         }
         catch (error) {
-            throw new Error("Error populating the docking station table");
+            throw new Error(`${Date.now()}: Error populating the docking station table`);
         }
     }
     else if (!data) {
-        console.log("Data undefined:");
+        console.log(`${Date.now()} Data undefined:`);
         console.log(data);
     }
     else {
@@ -97,11 +98,11 @@ async function updateBikePointsTable() {
             try {
                 isExisting = await checkBikePoint(bikePoint.id);
                 if (!isExisting) {
-                    console.log(`Bikepoint ${bikePoint.id} existing: ${isExisting}`);
+                    console.log(`${Date.now()}: §Bikepoint ${bikePoint.id} existing: ${isExisting}`);
                 }
                 if (!isExisting) {
                     const res = await createBikePoint(bikePoint);
-                    console.log(`Created bikePoint: ${res}`);
+                    console.log(`${Date.now()}: Created bikePoint: ${res}`);
                 }
                 await prisma.bikePoint.update({
                     where: { id: bikePoint.id },
@@ -120,11 +121,11 @@ async function updateBikePointsTable() {
                 });
             }
             catch (error) {
+                console.log(`${Date.now()}Error at bikePoint: ${bikePoint.id} exist? ${isExisting}`);
                 console.log(error);
-                console.log(`Error at bikePoint: ${bikePoint.id} exist? ${isExisting}`);
             }
         }
-        console.log("Bikepoint table updated");
+        console.log(`${Date.now()} Bikepoint table updated`);
     }
 }
 export { updateBikePointsTable };
