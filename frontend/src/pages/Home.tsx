@@ -85,7 +85,7 @@ function LoginPage({ activeList, setActiveList }: LoginPageProps) {
 
   return (
     <>
-      <h1 className="text-2xl font-bold mb-4">Bike Stations</h1>
+      {/* <h1 className="text-2xl font-bold mb-4">Bike Stations</h1> */}
       {/* Search bar */}
       <form
         className="mb-4 flex flex-col items-center"
