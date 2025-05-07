@@ -1,0 +1,26 @@
+.addButton {
+  border-radius: 8px;
+  box-shadow: rgba(255, 255, 255, 0.7) 0 1px 0 0 inset;
+  /*box-sizing: border-box;*/
+  color: slategrey;
+  font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans",
+    sans-serif;
+  font-size: 0.6em;
+  margin: 0px 10px;
+  outline: none;
+  padding: 2px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.addButton:hover,
+.addButton:focus {
+  color: black;
+}
+
+.addButton:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
+}

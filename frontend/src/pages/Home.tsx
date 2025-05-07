@@ -6,7 +6,7 @@ import { loadBikePointLists } from "../utils/loadBikePointLists";
 import { loadBikePoints } from "../utils/loadBikePoints";
 import { v4 as uuidv4 } from "uuid";
 
-import { Search } from "lucide-react";
+import { Search, ChevronUp, ChevronDown } from "lucide-react";
 
 import { BikePointCard } from "../features/BikePointCards/BikePointCard/BikePointCard";
 import { BikePointDropdown } from "../features/DropdownLists";
@@ -27,6 +27,7 @@ function LoginPage({ activeList, setActiveList }: LoginPageProps) {
   const [bikePoints, setBikePoints] = useState<BikePoint[]>();
   const token = useContext(AuthContext);
   const activeListId = Number(searchParams.get("activeListId"));
+  const [isEditingModal, setIsEditingModal] = useState(false);
 
   const [address, setAddress] = useState("");
   const navigate = useNavigate();
@@ -72,13 +73,33 @@ function LoginPage({ activeList, setActiveList }: LoginPageProps) {
 
   const bikePointCards = bikePoints?.map((bikePoint) => {
     return (
-      <div key={uuidv4()}>
-        <BikePointCard
-          stationId={bikePoint.id}
-          list={activeList?.id || 0}
-          bikePoints={bikePoints}
-          setBikePoints={setBikePoints}
-        ></BikePointCard>
+      <div className="flex relative">
+        {isEditingModal && (
+          <div className="flex flex-col justify-center absolute -left-9 top-1/2 bottom-1/2">
+            <button
+              onClick={() => alert("Up")}
+              type="button"
+              className="bg-teal-900 text-teal-950 text-center p-1 m-0.5 rounded-md  "
+            >
+              <ChevronUp className="w-5 h-5 rounded-md" />
+            </button>
+            <button
+              onClick={() => alert("Down")}
+              type="button"
+              className="bg-teal-900 text-teal-950 text-center p-1 m-0.5 rounded-md"
+            >
+              <ChevronDown className="w-5 h-5 rounded-md" />
+            </button>
+          </div>
+        )}
+        <div key={uuidv4()}>
+          <BikePointCard
+            stationId={bikePoint.id}
+            list={activeList?.id || 0}
+            bikePoints={bikePoints}
+            setBikePoints={setBikePoints}
+          />
+        </div>
       </div>
     );
   });
@@ -109,6 +130,8 @@ function LoginPage({ activeList, setActiveList }: LoginPageProps) {
         setBikePointLists={setBikePointLists}
         activeList={activeList}
         setActiveList={setActiveList}
+        isEditingModal={isEditingModal}
+        setIsEditingModal={setIsEditingModal}
       />
       <div className="space-y-4 flex flex-col items-center">
         {bikePointCards}

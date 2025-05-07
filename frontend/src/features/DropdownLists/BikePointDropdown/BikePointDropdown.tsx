@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./BikePointDropdown.module.css";
 import { AddListButton } from "../AddListButton/AddListButton";
+import { EditListButton } from "../EditListButton/EditListButton";
 import { DeleteListButton } from "../DeleteListButton/DeleteListButton";
 import { AuthContext } from "../../../contexts/AuthContext";
 
@@ -13,12 +14,16 @@ interface BikePointDropdownProps {
   setActiveList: React.Dispatch<
     React.SetStateAction<BikePointList | undefined>
   >;
+  isEditingModal: boolean;
+  setIsEditingModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 function BikePointDropdown({
   bikePointLists,
   setBikePointLists,
   activeList,
   setActiveList,
+  isEditingModal,
+  setIsEditingModal,
 }: BikePointDropdownProps) {
   const [activeListName, setActiveListName] = useState("");
   const token = useContext(AuthContext);
@@ -75,13 +80,17 @@ function BikePointDropdown({
           setActiveList={setActiveList}
         />
 
+        <EditListButton
+          isEditingModal={isEditingModal}
+          setIsEditingModal={setIsEditingModal}
+        />
+
         <DeleteListButton
           activeList={activeList}
           setActiveList={setActiveList}
           bikePointLists={bikePointLists}
           setBikePointLists={setBikePointLists}
           token={token}
-          // setActiveList={setActiveList}
         />
       </div>
     </div>
