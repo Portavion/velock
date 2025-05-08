@@ -19,6 +19,11 @@ interface LoginPageProps {
   >;
 }
 
+enum Direction {
+  UP = "up",
+  DOWN = "DOWN",
+}
+
 function LoginPage({ activeList, setActiveList }: LoginPageProps) {
   const [bikePointLists, setBikePointLists] = useState<
     BikePointList[] | undefined
@@ -38,6 +43,43 @@ function LoginPage({ activeList, setActiveList }: LoginPageProps) {
       `/search?address=${address.replaceAll(" ", "+")}&activelist=${activeList?.id}`,
     );
   }
+
+  const handleReorder = (id: string, direction: Direction) => {
+    let position: number = 0;
+    if (!bikePoints) {
+      return;
+    }
+
+    for (let i = 0; i < bikePoints.length; i++) {
+      if (bikePoints[i].id == id) {
+        position = i;
+      }
+    }
+
+    const bikePointsCopy = [...bikePoints];
+
+    if (direction == Direction.UP) {
+      if (position == 0) {
+        return;
+      }
+      [bikePointsCopy[position], bikePointsCopy[position - 1]] = [
+        bikePointsCopy[position - 1],
+        bikePointsCopy[position],
+      ];
+    }
+
+    if (direction == Direction.DOWN) {
+      if (position == bikePoints.length - 1) {
+        return;
+      }
+      [bikePointsCopy[position], bikePointsCopy[position + 1]] = [
+        bikePointsCopy[position + 1],
+        bikePointsCopy[position],
+      ];
+    }
+
+    setBikePoints(bikePointsCopy);
+  };
 
   useEffect(() => {
     const fetchList = async () => {
@@ -73,26 +115,26 @@ function LoginPage({ activeList, setActiveList }: LoginPageProps) {
 
   const bikePointCards = bikePoints?.map((bikePoint) => {
     return (
-      <div className="flex relative">
-        {isEditingModal && (
-          <div className="flex flex-col justify-center absolute -left-9 top-1/2 bottom-1/2">
-            <button
-              onClick={() => alert("Up")}
-              type="button"
-              className="bg-teal-900 text-teal-950 text-center p-1 m-0.5 rounded-md  "
-            >
-              <ChevronUp className="w-5 h-5 rounded-md" />
-            </button>
-            <button
-              onClick={() => alert("Down")}
-              type="button"
-              className="bg-teal-900 text-teal-950 text-center p-1 m-0.5 rounded-md"
-            >
-              <ChevronDown className="w-5 h-5 rounded-md" />
-            </button>
-          </div>
-        )}
-        <div key={uuidv4()}>
+      <div key={uuidv4()}>
+        <div className="flex relative">
+          {isEditingModal && (
+            <div className="flex flex-col justify-center absolute -left-9 top-1/2 bottom-1/2">
+              <button
+                onClick={() => handleReorder(bikePoint.id, Direction.UP)}
+                type="button"
+                className="bg-teal-900 text-teal-950 text-center p-1 m-0.5 rounded-md  "
+              >
+                <ChevronUp className="w-5 h-5 rounded-md" />
+              </button>
+              <button
+                onClick={() => handleReorder(bikePoint.id, Direction.DOWN)}
+                type="button"
+                className="bg-teal-900 text-teal-950 text-center p-1 m-0.5 rounded-md"
+              >
+                <ChevronDown className="w-5 h-5 rounded-md" />
+              </button>
+            </div>
+          )}
           <BikePointCard
             stationId={bikePoint.id}
             list={activeList?.id || 0}
@@ -106,7 +148,6 @@ function LoginPage({ activeList, setActiveList }: LoginPageProps) {
 
   return (
     <>
-      {/* <h1 className="text-2xl font-bold mb-4">Bike Stations</h1> */}
       {/* Search bar */}
       <form
         className="mb-4 flex flex-col items-center"
