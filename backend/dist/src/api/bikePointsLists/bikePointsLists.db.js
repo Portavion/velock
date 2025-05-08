@@ -21,6 +21,12 @@ async function updateBikePointsListAdd(listId, bikePoint) {
         data: { bikePointsIds: { push: bikePoint } },
     });
 }
+async function updateBikePointsList(listId, bikePointIds) {
+    return await prisma.bikePointList.update({
+        where: { id: listId },
+        data: { bikePointsIds: bikePointIds },
+    });
+}
 async function deleteBikePointsList(listId, userId) {
     if (!listId) {
         console.log("invalid name");
@@ -50,4 +56,4 @@ async function deleteBikePoint(listId, bikePointName) {
         return deleteResponse;
     }
 }
-export { selectAllBikePointsLists, createBikePointsList, deleteBikePointsList, updateBikePointsListName, updateBikePointsListAdd, deleteBikePoint, };
+export { selectAllBikePointsLists, createBikePointsList, deleteBikePointsList, updateBikePointsListName, updateBikePointsList, updateBikePointsListAdd, deleteBikePoint, };

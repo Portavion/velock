@@ -26,9 +26,15 @@ bikePointsListsRoutes.put(
 );
 
 bikePointsListsRoutes.put(
-  "/",
+  "/add",
   authenticate,
   bikePointsListsHandler.updateBikePointsListAdd,
+);
+
+bikePointsListsRoutes.put(
+  "/",
+  authenticate,
+  bikePointsListsHandler.updateBikePointsList,
 );
 //DELETE
 bikePointsListsRoutes.delete(

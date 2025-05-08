@@ -39,6 +39,16 @@ async function updateBikePointsListAdd(
   });
 }
 
+async function updateBikePointsList(
+  listId: number,
+  bikePointIds: string[],
+): Promise<BikePointList> {
+  return await prisma.bikePointList.update({
+    where: { id: listId },
+    data: { bikePointsIds: bikePointIds },
+  });
+}
+
 async function deleteBikePointsList(
   listId: number,
   userId: number,
@@ -82,6 +92,7 @@ export {
   createBikePointsList,
   deleteBikePointsList,
   updateBikePointsListName,
+  updateBikePointsList,
   updateBikePointsListAdd,
   deleteBikePoint,
 };
