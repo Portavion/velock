@@ -1,13 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import { PencilLine } from "lucide-react";
-import { AuthContext } from "../../../contexts/AuthContext";
 
-export const EditListButton: React.FC<EditListButton> = ({
+interface Props {
+  isEditingModal: boolean;
+  setIsEditingModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const EditListButton: React.FC<Props> = ({
   isEditingModal,
   setIsEditingModal,
 }) => {
-  async function addList();
-
   const handleEditingButtonPress = () => {
     setIsEditingModal(!isEditingModal);
   };
