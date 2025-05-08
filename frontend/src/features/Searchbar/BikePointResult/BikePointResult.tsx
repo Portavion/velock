@@ -76,14 +76,17 @@ const BikePointResult = ({
         "=" +
         encodeURIComponent(stationId);
 
-      await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/bikepointslists`, {
-        method: "PUT",
-        headers: {
-          "content-type": "application/x-www-form-urlencoded",
-          Authorization: `Bearer ${token}`,
+      await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/v1/bikepointslists/add/`,
+        {
+          method: "PUT",
+          headers: {
+            "content-type": "application/x-www-form-urlencoded",
+            Authorization: `Bearer ${token}`,
+          },
+          body: body,
         },
-        body: body,
-      });
+      );
       setAdded(true);
     } catch (error) {
       console.log(error);

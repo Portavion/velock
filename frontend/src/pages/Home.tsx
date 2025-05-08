@@ -11,6 +11,7 @@ import { Search, ChevronUp, ChevronDown } from "lucide-react";
 import { BikePointCard } from "../features/BikePointCards/BikePointCard/BikePointCard";
 import { BikePointDropdown } from "../features/DropdownLists";
 import { AuthContext } from "../contexts/AuthContext";
+import { updateList } from "../utils/updateList";
 
 interface LoginPageProps {
   activeList: BikePointList | undefined;
@@ -79,6 +80,8 @@ function LoginPage({ activeList, setActiveList }: LoginPageProps) {
     }
 
     setBikePoints(bikePointsCopy);
+    const ids = bikePointsCopy.map((bikePoint) => bikePoint.id);
+    updateList(token, activeListId, ids);
   };
 
   useEffect(() => {
@@ -93,7 +96,6 @@ function LoginPage({ activeList, setActiveList }: LoginPageProps) {
               (list) => list.id === activeListId,
             );
             setActiveList(matchingActiveList[0]);
-            console.log(activeList);
           } else {
             setActiveList(data[0]);
           }

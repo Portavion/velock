@@ -1,20 +1,25 @@
-async function addToList(
+async function updateList(
   token: string,
   listId: number,
-  bikePointId: string,
+  bikePointIds: string[],
 ): Promise<string[]> {
+  let idString = bikePointIds[0];
+
+  for (let i = 1; i < bikePointIds.length; i++) {
+    idString = idString + ";" + bikePointIds[i];
+  }
   const formBody =
     encodeURIComponent("listId") +
     "=" +
     encodeURIComponent(listId) +
     "&" +
-    encodeURIComponent("bikePoint") +
+    encodeURIComponent("bikePoints") +
     "=" +
-    encodeURIComponent(bikePointId);
+    encodeURIComponent(idString);
 
   try {
     const bikePointResponse = await fetch(
-      `${process.env.VITE_BASE_URL}/api/v1/bikepointslists/add/`,
+      `${import.meta.env.VITE_BASE_URL}/api/v1/bikepointslists/`,
       {
         method: "PUT",
         headers: {
@@ -33,4 +38,4 @@ async function addToList(
   }
 }
 
-export { addToList };
+export { updateList };
