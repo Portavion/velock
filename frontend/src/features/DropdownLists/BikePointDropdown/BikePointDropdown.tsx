@@ -59,6 +59,13 @@ function BikePointDropdown({
   return (
     <div className="flex justify-center">
       <div className="flex items-center justify-center h-8 mb-8 w-full ">
+        <DeleteListButton
+          activeList={activeList}
+          setActiveList={setActiveList}
+          bikePointLists={bikePointLists}
+          setBikePointLists={setBikePointLists}
+          token={token}
+        />
         <select
           name="BikePointListsDropdown"
           id="BikePointListsDropdown"
@@ -83,14 +90,6 @@ function BikePointDropdown({
         <EditListButton
           isEditingModal={isEditingModal}
           setIsEditingModal={setIsEditingModal}
-        />
-
-        <DeleteListButton
-          activeList={activeList}
-          setActiveList={setActiveList}
-          bikePointLists={bikePointLists}
-          setBikePointLists={setBikePointLists}
-          token={token}
         />
       </div>
     </div>

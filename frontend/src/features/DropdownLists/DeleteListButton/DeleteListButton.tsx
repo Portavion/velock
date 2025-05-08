@@ -49,7 +49,7 @@ export const DeleteListButton: React.FC<DeleteListButton> = ({
       type="button"
       className="bg-teal-800 text-teal-950 text-center p-0 mx-1 rounded-md"
     >
-      <Trash2 className="w-5 h-5 rounded-md" />
+      <Trash2 className="w-7 h-7 rounded-md" />
     </button>
   );
 };
