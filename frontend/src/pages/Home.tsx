@@ -81,7 +81,11 @@ function LoginPage({ activeList, setActiveList }: LoginPageProps) {
 
     setBikePoints(bikePointsCopy);
     const ids = bikePointsCopy.map((bikePoint) => bikePoint.id);
-    updateList(token, activeListId, ids);
+    if (activeList?.id) {
+      updateList(token, activeList.id, ids);
+    } else {
+      console.log("Error saving order, missing active list id");
+    }
   };
 
   useEffect(() => {

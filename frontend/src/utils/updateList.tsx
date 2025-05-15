@@ -8,6 +8,7 @@ async function updateList(
   for (let i = 1; i < bikePointIds.length; i++) {
     idString = idString + ";" + bikePointIds[i];
   }
+
   const formBody =
     encodeURIComponent("listId") +
     "=" +
