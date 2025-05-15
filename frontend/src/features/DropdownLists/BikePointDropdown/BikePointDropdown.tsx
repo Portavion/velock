@@ -88,6 +88,7 @@ function BikePointDropdown({
         />
 
         <EditListButton
+          activeList={activeList}
           isEditingModal={isEditingModal}
           setIsEditingModal={setIsEditingModal}
         />

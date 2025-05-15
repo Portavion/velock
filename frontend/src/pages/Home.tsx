@@ -11,7 +11,6 @@ import { Search, ChevronUp, ChevronDown } from "lucide-react";
 import { BikePointCard } from "../features/BikePointCards/BikePointCard/BikePointCard";
 import { BikePointDropdown } from "../features/DropdownLists";
 import { AuthContext } from "../contexts/AuthContext";
-import { updateList } from "../utils/updateList";
 
 interface LoginPageProps {
   activeList: BikePointList | undefined;
@@ -82,9 +81,7 @@ function LoginPage({ activeList, setActiveList }: LoginPageProps) {
     setBikePoints(bikePointsCopy);
     const ids = bikePointsCopy.map((bikePoint) => bikePoint.id);
     if (activeList?.id) {
-      updateList(token, activeList.id, ids);
-    } else {
-      console.log("Error saving order, missing active list id");
+      setActiveList({ ...activeList, bikePointsIds: ids });
     }
   };
 
@@ -107,7 +104,7 @@ function LoginPage({ activeList, setActiveList }: LoginPageProps) {
       }
     };
     fetchList();
-  }, [token]);
+  }, [token, activeList]);
 
   useEffect(() => {
     const fetchBikePoints = async () => {
