@@ -85,7 +85,7 @@ const authHandler: AuthHandler = {
       // Send the error message to the client
       res.status(400).json({
         status: 400,
-        message: error.message.toString(),
+        message: error.message.toLocaleString(),
       });
       return;
       next(error);

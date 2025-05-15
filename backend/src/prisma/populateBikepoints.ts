@@ -4,9 +4,14 @@ const prisma = new PrismaClient();
 import { BikePoint, BikePointTfL } from "../types";
 
 //TODO: type for tfl response
+
+let TFL_CACHE = await formatBikePointData();
+
 async function formatBikePointData(): Promise<BikePoint[] | undefined> {
   try {
     const bikePointsData = await fetchTflData();
+    const time = new Date().toLocaleString("en-GB");
+    console.log(`${time}: Pulling TfL data`);
     let bikePointsDataStripped: BikePoint[] | undefined = undefined;
 
     if (bikePointsData) {
@@ -68,9 +73,11 @@ async function createBikePoint(bikePoint: BikePoint): Promise<Boolean> {
         lon: bikePoint.lon,
       },
     });
-    console.log(`${Date.now()}: Created bikePoint ${bikePoint.id}`);
+    const time = new Date().toLocaleString("en-GB");
+    console.log(`${time}: Created bikePoint ${bikePoint.id}`);
   } catch (error) {
-    console.log(`${Date.now()}: Error creating bikePoint: ${error}`);
+    const time = new Date().toLocaleString("en-GB");
+    console.log(`${time}: Error creating bikePoint: ${error}`);
     return false;
   }
   return true;
@@ -82,7 +89,8 @@ async function populateBikePointsTable(): Promise<void> {
     for (let bikePoint of data) {
       createBikePoint(bikePoint);
     }
-    console.log(`${Date.now()} BikePoint Table populated`);
+    const time = new Date().toLocaleString("en-GB");
+    console.log(`${time} BikePoint Table populated`);
   } else {
     console.log("No data for populating BikePoint Table");
   }
@@ -96,39 +104,66 @@ async function updateBikePointsTable(): Promise<void> {
     try {
       await populateBikePointsTable();
     } catch (error) {
-      throw new Error(
-        `${Date.now()}: Error populating the docking station table`,
-      );
+      const time = new Date().toLocaleString("en-GB");
+      throw new Error(`${time}: Error populating the docking station table`);
     }
   } else if (!data) {
-    console.log(`${Date.now()} Data undefined:`);
+    const time = new Date().toLocaleString("en-GB");
+    console.log(`${time} Data undefined:`);
     console.log(data);
   } else {
+    if (!TFL_CACHE) {
+      console.log("Error: no cach for tfl data");
+    }
+    if (!TFL_CACHE) {
+      console.log("Error, no tfl cache");
+      return;
+    }
+    // for (let tflBikePoint of TFL_CACHE)
     for (let bikePoint of data) {
-      try {
-        await prisma.bikePoint.update({
-          where: { id: bikePoint.id },
-          data: {
-            id: bikePoint.id,
-            commonName: bikePoint.commonName,
-            locked: bikePoint.locked,
-            NbBikes: bikePoint.NbBikes,
-            NbEmptyDocks: bikePoint.NbEmptyDocks,
-            NbDocks: bikePoint.NbDocks,
-            NbStandardBikes: bikePoint.NbStandardBikes,
-            NbEbikes: bikePoint.NbEBikes,
-            lat: bikePoint.lat,
-            lon: bikePoint.lon,
-          },
-        });
-      } catch (error) {
-        console.log(`${Date.now()}Error at bikePoint: ${bikePoint.id}`);
-        console.log(error);
-        const res = await createBikePoint(bikePoint);
-        console.log(`${Date.now()}: Created bikePoint: ${res}`);
+      const matchingTfLBikePoint = TFL_CACHE?.filter(
+        (tflBikePoint) => tflBikePoint.commonName == bikePoint.commonName,
+      )[0];
+      if (!matchingTfLBikePoint) {
+        console.log("Potential new station, updating TfL cache");
+        TFL_CACHE = await formatBikePointData();
+      }
+      if (
+        matchingTfLBikePoint?.NbDocks != bikePoint.NbDocks ||
+        matchingTfLBikePoint?.NbEBikes != bikePoint.NbEBikes ||
+        matchingTfLBikePoint?.NbEmptyDocks != bikePoint.NbEmptyDocks ||
+        matchingTfLBikePoint?.NbBikes != bikePoint.NbBikes ||
+        matchingTfLBikePoint?.NbStandardBikes != bikePoint.NbStandardBikes ||
+        matchingTfLBikePoint?.locked != bikePoint.locked
+      ) {
+        console.log("Updating: ", bikePoint.commonName);
+        try {
+          await prisma.bikePoint.update({
+            where: { id: bikePoint.id },
+            data: {
+              id: bikePoint.id,
+              commonName: bikePoint.commonName,
+              locked: bikePoint.locked,
+              NbBikes: bikePoint.NbBikes,
+              NbEmptyDocks: bikePoint.NbEmptyDocks,
+              NbDocks: bikePoint.NbDocks,
+              NbStandardBikes: bikePoint.NbStandardBikes,
+              NbEbikes: bikePoint.NbEBikes,
+              lat: bikePoint.lat,
+              lon: bikePoint.lon,
+            },
+          });
+        } catch (error) {
+          const time = new Date().toLocaleString("en-GB");
+          console.log(`${time}Error at bikePoint: ${bikePoint.id}`);
+          console.log(error);
+          const res = await createBikePoint(bikePoint);
+          console.log(`${time}: Created bikePoint: ${res}`);
+        }
       }
     }
-    console.log(`${Date.now()} Bikepoint table updated`);
+    const time = new Date().toLocaleString("en-GB");
+    console.log(`${time} Bikepoint table updated`);
   }
 }
 

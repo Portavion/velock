@@ -13,9 +13,7 @@ import apiV1Router from "./routes.js";
 import { updateBikePointsTable } from "./prisma/populateBikepoints.js";
 
 dotenv.config();
-// const UPDATE_FREQ_IN_MS = 1000 * 60 * 1; // updates every minute
 let UPDATE_FREQ_IN_MS = Number(process.env.UPDATE_FREQ) || 1000 * 60 * 5;
-// const UPDATE_FREQ_IN_MS = 1000 * 60 * 0.25; // updates every minute
 
 passport.use(
   new JWTStrategy(
@@ -44,13 +42,8 @@ passport.use(
 const app: Application = express();
 const port = process.env.PORT || 3000;
 
-app.use(
-  helmet({
-    // crossOriginResourcePolicy: { policy: "cross-origin" }, // Allow cross-origin requests
-  }),
-);
+app.use(helmet({}));
 
-// app.use(cors());
 app.use(
   cors({
     origin: ["http://localhost:5173", "https://bike.portavion.net"], // Allow requests from this origin
@@ -72,7 +65,7 @@ app.use((_req, res, next) => {
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-setInterval(updateBikePointsTable, UPDATE_FREQ_IN_MS); // updates every 5 min: 1000ms * 60s * 2
+setInterval(updateBikePointsTable, UPDATE_FREQ_IN_MS);
 
 app.use("/api/v1/", apiV1Router);
 app.use(errorHandler);
