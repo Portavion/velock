@@ -6,7 +6,7 @@ export interface BikePoint {
   NbEmptyDocks: number;
   NbDocks: number;
   NbStandardBikes: number;
-  NbEBikes: number;
+  NbEbikes: number;
   lat: number;
   lon: number;
 }
@@ -20,7 +20,7 @@ export interface BikePointTfL {
   NbEmptyDocks: number;
   NbDocks: number;
   NbStandardBikes: number;
-  NbEBikes: number;
+  NbEbikes: number;
   lat: number;
   lon: number;
 }

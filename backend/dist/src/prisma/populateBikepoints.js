@@ -1,7 +1,7 @@
 import fetchTflData from "../utils/fetchTflData.js";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-let TFL_CACHE = await formatBikePointData();
+import { TFL_CACHE, updateTfLCache } from "../utils/tflCache.js";
 async function formatBikePointData() {
     try {
         const bikePointsData = await fetchTflData();
@@ -17,7 +17,7 @@ async function formatBikePointData() {
                 NbEmptyDocks: Number(bikePoint.additionalProperties.find((property) => property.key === "NbEmptyDocks")?.value),
                 NbDocks: Number(bikePoint.additionalProperties.find((property) => property.key === "NbDocks")?.value),
                 NbStandardBikes: Number(bikePoint.additionalProperties.find((property) => property.key === "NbStandardBikes")?.value),
-                NbEBikes: Number(bikePoint.additionalProperties.find((property) => property.key === "NbEBikes")?.value),
+                NbEbikes: Number(bikePoint.additionalProperties.find((property) => property.key === "NbEBikes")?.value),
                 lat: bikePoint.lat,
                 lon: bikePoint.lon,
             }));
@@ -40,7 +40,7 @@ async function createBikePoint(bikePoint) {
                 NbEmptyDocks: bikePoint.NbEmptyDocks,
                 NbDocks: bikePoint.NbDocks,
                 NbStandardBikes: bikePoint.NbStandardBikes,
-                NbEbikes: bikePoint.NbEBikes,
+                NbEbikes: bikePoint.NbEbikes,
                 lat: bikePoint.lat,
                 lon: bikePoint.lon,
             },
@@ -97,10 +97,10 @@ async function updateBikePointsTable() {
             const matchingTfLBikePoint = TFL_CACHE?.filter((tflBikePoint) => tflBikePoint.commonName == bikePoint.commonName)[0];
             if (!matchingTfLBikePoint) {
                 console.log("Potential new station, updating TfL cache");
-                TFL_CACHE = await formatBikePointData();
+                updateTfLCache();
             }
             if (matchingTfLBikePoint?.NbDocks != bikePoint.NbDocks ||
-                matchingTfLBikePoint?.NbEBikes != bikePoint.NbEBikes ||
+                matchingTfLBikePoint?.NbEbikes != bikePoint.NbEbikes ||
                 matchingTfLBikePoint?.NbEmptyDocks != bikePoint.NbEmptyDocks ||
                 matchingTfLBikePoint?.NbBikes != bikePoint.NbBikes ||
                 matchingTfLBikePoint?.NbStandardBikes != bikePoint.NbStandardBikes ||
@@ -117,7 +117,7 @@ async function updateBikePointsTable() {
                             NbEmptyDocks: bikePoint.NbEmptyDocks,
                             NbDocks: bikePoint.NbDocks,
                             NbStandardBikes: bikePoint.NbStandardBikes,
-                            NbEbikes: bikePoint.NbEBikes,
+                            NbEbikes: bikePoint.NbEbikes,
                             lat: bikePoint.lat,
                             lon: bikePoint.lon,
                         },
@@ -136,4 +136,4 @@ async function updateBikePointsTable() {
         console.log(`${time} Bikepoint table updated`);
     }
 }
-export { updateBikePointsTable };
+export { updateBikePointsTable, formatBikePointData };

@@ -1,6 +1,8 @@
 import fetch from "node-fetch";
 import fetchTflData from "../../utils/fetchTflData.js";
 import { PrismaClient } from "@prisma/client";
+import { TFL_CACHE } from "../../utils/tflCache.js";
+import { updateBikePointsTable } from "../../prisma/populateBikepoints.js";
 const prisma = new PrismaClient();
 const bikePointsHandler = {
     getAllBikePointsData: async (_req, res, next) => {
@@ -13,18 +15,15 @@ const bikePointsHandler = {
             next(error);
         }
     },
-    getBikePointData: async (req, res, next) => {
+    getBikePointData: async (req, res, _next) => {
         const bikePointId = String(req.query.id);
-        if (bikePointId) {
-            try {
-                const bikePointData = await prisma.bikePoint.findUnique({
-                    where: { id: bikePointId },
-                });
-                res.status(200).json(bikePointData);
-                return;
-            }
-            catch (error) {
-                next(error);
+        if (bikePointId && TFL_CACHE) {
+            for (let bikePoint of TFL_CACHE) {
+                if (bikePoint.id == bikePointId) {
+                    console.log("Requested: ", bikePoint);
+                    res.status(200).json(bikePoint);
+                    return;
+                }
             }
         }
     },
@@ -47,6 +46,7 @@ const bikePointsHandler = {
             latitude = Number(bestGeocodingResult.lat);
             longitude = Number(bestGeocodingResult.lon);
             try {
+                updateBikePointsTable();
                 const closestBikePoints = await prisma.$queryRaw `
 SELECT *, 
        ST_Distance(

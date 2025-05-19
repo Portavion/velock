@@ -3,6 +3,8 @@ import { NextFunction, Request, Response } from "express";
 import fetch, { Response as FetchResponse } from "node-fetch";
 import fetchTflData from "../../utils/fetchTflData.js";
 import { PrismaClient } from "@prisma/client";
+import { TFL_CACHE } from "../../utils/tflCache.js";
+import { updateBikePointsTable } from "../../prisma/populateBikepoints.js";
 const prisma = new PrismaClient();
 
 interface BikePointsHandler {
@@ -42,20 +44,16 @@ const bikePointsHandler: BikePointsHandler = {
   getBikePointData: async (
     req: Request,
     res: Response,
-    next: NextFunction,
+    _next: NextFunction,
   ): Promise<void> => {
     const bikePointId = String(req.query.id);
 
-    if (bikePointId) {
-      try {
-        const bikePointData = await prisma.bikePoint.findUnique({
-          where: { id: bikePointId },
-        });
-        //TODO: refactor proper export
-        res.status(200).json(bikePointData);
-        return;
-      } catch (error) {
-        next(error);
+    if (bikePointId && TFL_CACHE) {
+      for (let bikePoint of TFL_CACHE) {
+        if (bikePoint.id == bikePointId) {
+          res.status(200).json(bikePoint);
+          return;
+        }
       }
     }
   },
@@ -93,6 +91,7 @@ const bikePointsHandler: BikePointsHandler = {
       longitude = Number(bestGeocodingResult.lon);
 
       try {
+        updateBikePointsTable();
         const closestBikePoints = await prisma.$queryRaw<any[]>`
 SELECT *, 
        ST_Distance(
