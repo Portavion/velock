@@ -169,7 +169,6 @@ function LoginPage({ activeList, setActiveList }: LoginPageProps) {
         </div>
       </form>
 
-      {/* <Searchbar activeListId={activeList.id} /> */}
       <BikePointDropdown
         bikePointLists={bikePointLists}
         setBikePointLists={setBikePointLists}

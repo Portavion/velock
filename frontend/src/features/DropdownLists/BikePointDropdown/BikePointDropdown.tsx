@@ -58,7 +58,7 @@ function BikePointDropdown({
 
   return (
     <div className="flex justify-center">
-      <div className="flex items-center justify-center h-8 mb-8 w-full ">
+      <div className="flex items-center justify-center h-8 mb-4 w-full ">
         <DeleteListButton
           activeList={activeList}
           setActiveList={setActiveList}

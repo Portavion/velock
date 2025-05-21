@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { useRetrieveJWT } from "../../../utils/retrieveJWT";
 import styles from "./BikePointResult.module.css";
+import {
+  Bike,
+  BatteryMedium,
+  Battery,
+  ParkingSquare,
+  ParkingSquareOff,
+} from "lucide-react";
+import BikePointMap from "../../BikePointCards/BikePointMap/BikePointMap";
 
 interface BikePointResultsProps {
   stationName: string;
@@ -9,6 +17,7 @@ interface BikePointResultsProps {
   spaceLeft: number;
   ebikeLeft: number;
   activeListId: number | null;
+  coord: [number, number];
 }
 
 const BikePointResult = ({
@@ -18,12 +27,14 @@ const BikePointResult = ({
   spaceLeft,
   ebikeLeft,
   activeListId,
+  coord,
 }: BikePointResultsProps) => {
   const bikeAvailable = bikeLeft > 0 ? true : false;
   const spaceAvailable = spaceLeft > 0 ? true : false;
   const ebikeAvailable = ebikeLeft > 0 ? true : false;
   const token = useRetrieveJWT();
   const [added, setAdded] = useState(false);
+  const [isMapVisible, setIsMapVisible] = useState(false);
 
   if (!activeListId) {
     return (
@@ -44,28 +55,10 @@ const BikePointResult = ({
     );
   }
 
-  if (added) {
-    return (
-      <div className="bg-slate-50 w-60 p-1 color-black m-3 rounded-xl relative">
-        <h3 className="text-black text-md">{stationName}</h3>
-        <div className={styles.availableContainer}>
-          <p className={bikeAvailable ? styles.available : styles.empty}>
-            Bikes: {bikeLeft - ebikeLeft}
-          </p>
-          <p className={ebikeAvailable ? styles.available : styles.empty}>
-            E-bikes: {ebikeLeft}
-          </p>
-          <p className={spaceAvailable ? styles.available : styles.empty}>
-            Empty spaces: {spaceLeft}
-          </p>
-        </div>
-        <button id={stationId} className={styles.addButton}>
-          Added
-        </button>
-      </div>
-    );
-  }
-  const handleAddToList = async () => {
+  const handleAddToList = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.stopPropagation();
     try {
       const body =
         encodeURIComponent("listId") +
@@ -94,26 +87,61 @@ const BikePointResult = ({
   };
 
   return (
-    <div className="bg-slate-50 w-70  h-30 p-0 color-black m-3 rounded-xl relative flex flex-col items-center justify-around">
-      <h3 className="text-black text-md ">{stationName}</h3>
-      <div className="flex flex-row justify-between flex-wrap">
-        <p className={bikeAvailable ? styles.available : styles.empty}>
-          Bikes: {bikeLeft - ebikeLeft}
-        </p>
-        <p className={ebikeAvailable ? styles.available : styles.empty}>
-          E-bikes: {ebikeLeft}
-        </p>
-        <p className={spaceAvailable ? styles.available : styles.empty}>
-          Empty spaces: {spaceLeft}
-        </p>
+    <div
+      onClick={() => setIsMapVisible(!isMapVisible)}
+      className="bg-teal-900 p-4 mb-4 rounded-md shadow-md list-none w-80"
+    >
+      <h3 className="font-medium text-md p-0">{stationName}</h3>
+
+      <div className="grid grid-cols-3 gap-2 text-sm w-full">
+        <div className="flex items-center">
+          {bikeLeft && <Bike size={16} className="mr-1 text-green-500" />}
+          {!bikeLeft && <Bike size={16} className="mr-1 text-red-500" />}
+          <span>
+            {bikeLeft} {bikeLeft > 1 ? "bikes" : "bike"}
+          </span>
+        </div>
+        <div className="flex items-center">
+          {ebikeAvailable && (
+            <BatteryMedium size={16} className="mr-1 text-green-500" />
+          )}
+          {!ebikeAvailable && (
+            <Battery size={16} className="mr-1 text-red-500" />
+          )}
+          <span>
+            {ebikeLeft} {ebikeLeft > 1 ? "e-bikes" : "e-bike"}
+          </span>
+        </div>
+        <div className="flex items-center">
+          {spaceAvailable && (
+            <ParkingSquare size={16} className="mr-1 text-green-500" />
+          )}
+          {!spaceAvailable && (
+            <ParkingSquareOff size={16} className="mr-1 text-red-500" />
+          )}
+          <span>
+            {spaceLeft} {spaceLeft > 1 ? "spaces" : "space"}
+          </span>
+        </div>
       </div>
-      <button
-        id={stationId}
-        className="bg-slate-500 text-slate-100 w-10 round-md"
-        onClick={handleAddToList}
-      >
-        Add
-      </button>
+      {added && (
+        <button
+          id={stationId}
+          className="bg-teal-800 text-stone-200 mt-4 w-12 text-center round-md inset-shadow-sm/80"
+        >
+          Added
+        </button>
+      )}
+      {!added && (
+        <button
+          id={stationId}
+          className="z-10 bg-teal-700 text-slate-100 mt-4 w-12 text-center round-md shadow-sm"
+          onClick={handleAddToList}
+        >
+          Add
+        </button>
+      )}
+      <BikePointMap x={coord[0]} y={coord[1]} isMapVisible={isMapVisible} />
     </div>
   );
 };

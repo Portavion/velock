@@ -82,6 +82,7 @@ export function SearchResults() {
           ebikeLeft={bikePoint.NbEbikes}
           spaceLeft={bikePoint.NbEmptyDocks}
           activeListId={activeListId}
+          coord={[bikePoint.lat, bikePoint.lon]}
         ></BikePointResult>
       </div>
     );
@@ -95,7 +96,7 @@ export function SearchResults() {
       >
         Go back
       </a>
-      {bikePointResults}
+      <div className="mt-4">{bikePointResults}</div>
     </>
   );
 }
