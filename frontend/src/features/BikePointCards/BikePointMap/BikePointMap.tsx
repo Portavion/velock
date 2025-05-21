@@ -29,7 +29,6 @@ export default function BikePointMap({
 
   return isMapVisible ? (
     <>
-      <div>Map View</div>
       <MapContainer
         center={position}
         zoom={17}
