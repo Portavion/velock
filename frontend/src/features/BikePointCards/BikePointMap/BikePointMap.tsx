@@ -32,7 +32,7 @@ export default function BikePointMap({
       <MapContainer
         center={position}
         zoom={17}
-        className="h-64 w-full rounded-md"
+        className="h-64 w-full rounded-md mt-4"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
