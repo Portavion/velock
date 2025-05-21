@@ -48,13 +48,9 @@ const bikePointsHandler: BikePointsHandler = {
   ): Promise<void> => {
     const bikePointId = String(req.query.id);
 
-    if (bikePointId && TFL_CACHE) {
-      for (let bikePoint of TFL_CACHE) {
-        if (bikePoint.id == bikePointId) {
-          res.status(200).json(bikePoint);
-          return;
-        }
-      }
+    if (bikePointId && TFL_CACHE && TFL_CACHE.has(bikePointId)) {
+      res.status(200).json(TFL_CACHE.get(bikePointId));
+      return;
     }
   },
 

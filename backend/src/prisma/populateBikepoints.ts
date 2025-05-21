@@ -119,9 +119,7 @@ async function updateBikePointsTable(): Promise<void> {
       return;
     }
     for (let bikePoint of data) {
-      const matchingTfLBikePoint = TFL_CACHE?.filter(
-        (tflBikePoint) => tflBikePoint.commonName == bikePoint.commonName,
-      )[0];
+      const matchingTfLBikePoint = TFL_CACHE.get(bikePoint.id);
       if (!matchingTfLBikePoint) {
         console.log("Potential new station, updating TfL cache");
         updateTfLCache();

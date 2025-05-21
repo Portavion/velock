@@ -1,10 +1,16 @@
 import { BikePoint } from "@prisma/client";
 import { formatBikePointData } from "../prisma/populateBikepoints.js";
 
-let TFL_CACHE: BikePoint[] | undefined;
+let TFL_CACHE: Map<string, BikePoint> = new Map();
 
 async function updateTfLCache() {
-  TFL_CACHE = await formatBikePointData();
+  const tfl_data = await formatBikePointData();
+  if (!tfl_data) {
+    return;
+  }
+  for (let bikePoint of tfl_data) {
+    TFL_CACHE.set(bikePoint.id, bikePoint);
+  }
 }
 
 export { TFL_CACHE, updateTfLCache };
