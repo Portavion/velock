@@ -33,7 +33,7 @@ const BikePointCard = ({
   );
   const stationName = bikePoints[stationIndex].commonName;
   const bikePoint = bikePoints[stationIndex];
-  const bikeAvailable = bikePoint.NbBikes > 0 ? true : false;
+  const bikeAvailable = bikePoint.NbStandardBikes > 0 ? true : false;
   const spaceAvailable = bikePoint.NbEmptyDocks > 0 ? true : false;
   const ebikeAvailable = bikePoint.NbEbikes > 0 ? true : false;
   const token = useContext(AuthContext);
@@ -69,7 +69,8 @@ const BikePointCard = ({
           {bikeAvailable && <Bike size={16} className="mr-1 text-green-500" />}
           {!bikeAvailable && <Bike size={16} className="mr-1 text-red-500" />}
           <span>
-            {bikePoint.NbBikes} {bikePoint.NbBikes > 1 ? "bikes" : "bike"}
+            {bikePoint.NbStandardBikes}{" "}
+            {bikePoint.NbStandardBikes > 1 ? "bikes" : "bike"}
           </span>
         </div>
         <div className="flex items-center">
