@@ -143,6 +143,7 @@ function LoginPage({ activeList, setActiveList }: LoginPageProps) {
             list={activeList?.id || 0}
             bikePoints={bikePoints}
             setBikePoints={setBikePoints}
+            isEditingModal={isEditingModal}
           />
         </div>
       </div>
