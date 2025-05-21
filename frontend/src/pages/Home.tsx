@@ -140,9 +140,10 @@ function LoginPage({ activeList, setActiveList }: LoginPageProps) {
           )}
           <BikePointCard
             stationId={bikePoint.id}
-            list={activeList?.id || 0}
+            activeList={activeList}
             bikePoints={bikePoints}
             setBikePoints={setBikePoints}
+            setActiveList={setActiveList}
             isEditingModal={isEditingModal}
           />
         </div>

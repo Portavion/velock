@@ -7,24 +7,26 @@ import {
   X,
 } from "lucide-react";
 
-import { removeFromList } from "../../../utils/removeFromList";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
+import { useState } from "react";
 import BikePointMap from "../BikePointMap/BikePointMap";
 
 interface BikePointCardProps {
   stationId: string;
-  list: number;
+  activeList: BikePointList | undefined;
   bikePoints: BikePoint[];
   setBikePoints: React.Dispatch<React.SetStateAction<BikePoint[] | undefined>>;
+  setActiveList: React.Dispatch<
+    React.SetStateAction<BikePointList | undefined>
+  >;
   isEditingModal: boolean;
 }
 
 const BikePointCard = ({
   stationId,
-  list,
+  activeList,
   bikePoints,
   setBikePoints,
+  setActiveList,
   isEditingModal,
 }: BikePointCardProps) => {
   const [isMapVisible, setIsMapVisible] = useState(false);
@@ -36,11 +38,21 @@ const BikePointCard = ({
   const bikeAvailable = bikePoint.NbStandardBikes > 0 ? true : false;
   const spaceAvailable = bikePoint.NbEmptyDocks > 0 ? true : false;
   const ebikeAvailable = bikePoint.NbEbikes > 0 ? true : false;
-  const token = useContext(AuthContext);
 
   const handleDelete = async () => {
-    removeFromList(token, list, stationId);
     setBikePoints(bikePoints.filter((bikePoint) => bikePoint.id !== stationId));
+    const filteredBikePoints = bikePoints
+      .filter((bikePoint) => bikePoint.id !== stationId)
+      .map((bikePoint) => bikePoint.id);
+    if (!activeList) {
+      return;
+    }
+    setActiveList({
+      id: activeList.id,
+      name: activeList.name,
+      bikePointsIds: filteredBikePoints,
+      userId: activeList?.userId,
+    });
   };
 
   const toggleMap = () => {
